@@ -21,4 +21,12 @@ public class KupacServis {
     public Kupac findOne(Integer id){
         return kupacDAO.findById(id).orElse(null);
     }
+
+    public Kupac saveKupac(Kupac kupac){
+        return kupacDAO.save(kupac);
+    }
+
+    public void deleteKupac(Kupac kupac){
+        kupacDAO.delete(kupac);
+    }
 }

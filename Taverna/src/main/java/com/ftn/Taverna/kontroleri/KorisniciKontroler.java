@@ -1,10 +1,13 @@
 package com.ftn.Taverna.kontroleri;
 
 
+import com.ftn.Taverna.model.Artikal;
+import com.ftn.Taverna.model.DTO.ArtikalDTO;
 import com.ftn.Taverna.model.DTO.KupacDTO;
 import com.ftn.Taverna.model.DTO.ProdavacDTO;
 import com.ftn.Taverna.model.Kupac;
 import com.ftn.Taverna.model.Prodavac;
+import com.ftn.Taverna.servisi.ArtikliServis;
 import com.ftn.Taverna.servisi.KupacServis;
 import com.ftn.Taverna.servisi.ProdavacServis;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +30,11 @@ public class KorisniciKontroler {
     private KupacServis kupacServis;
     @Autowired
     private ProdavacServis prodavacServis;
+    @Autowired
+    private ArtikliServis artikliServis;
 
+
+    //CRUD operacije za kupca
 
     @RequestMapping(value = "/lista-kupaca", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Collection<KupacDTO>> findAllKupac() {
@@ -40,16 +47,6 @@ public class KorisniciKontroler {
 
 
     }
-    @RequestMapping(value = "/lista-prodavaca", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Collection<ProdavacDTO>> findAllProdavci() {
-        List<Prodavac> prodavci = prodavacServis.findAll();
-        List<ProdavacDTO> prodavacDTO = new ArrayList<>();
-        for(Prodavac p:prodavci){
-            prodavacDTO.add(new ProdavacDTO(p));
-        }
-        return new ResponseEntity<>(prodavacDTO, HttpStatus.OK);
-    }
-
 
     @GetMapping(value = "/lista-kupaca/{id}")
     public ResponseEntity<KupacDTO> getKupacById(@PathVariable("id") Integer id){
@@ -60,6 +57,74 @@ public class KorisniciKontroler {
             }
             return new ResponseEntity<>(new KupacDTO(kupac), HttpStatus.OK);
         }
+
+
+
+
+
+    @PostMapping(value ="/lista-kupaca", consumes = "application/json")
+    public ResponseEntity<KupacDTO> snimiKupca(@RequestBody KupacDTO kupacDTO){
+
+        Kupac kupac = new Kupac();
+        kupac.setIme(kupacDTO.getIme());
+        kupac.setPrezime(kupacDTO.getPrezime());
+        kupac.setAdresa(kupacDTO.getAdresa());
+        kupac.setKorisnicko(kupacDTO.getKorisnicko());
+        kupac.setSifra(kupacDTO.getSifra());
+        kupac.setBlokiran(false);
+
+        kupac = kupacServis.saveKupac(kupac);
+        return new ResponseEntity<KupacDTO>(new KupacDTO(kupac), HttpStatus.CREATED);
+
+    }
+
+
+
+    @PutMapping(value ="/lista-kupaca",consumes = "application/json")
+    public ResponseEntity<KupacDTO> izmeniKupca(@RequestBody KupacDTO kupacDTO){
+        Kupac kupac = kupacServis.findOne(kupacDTO.getId());
+        if(kupac == null){
+            return new ResponseEntity<KupacDTO>(HttpStatus.BAD_REQUEST);
+        }
+        kupac.setIme(kupacDTO.getIme());
+        kupac.setPrezime(kupacDTO.getPrezime());
+        kupac.setAdresa(kupacDTO.getAdresa());
+        kupac.setKorisnicko(kupacDTO.getKorisnicko());
+        kupac.setSifra(kupacDTO.getSifra());
+
+        kupacServis.saveKupac(kupac);
+        return new ResponseEntity<KupacDTO>(new KupacDTO(kupac), HttpStatus.CREATED);
+
+
+
+    }
+
+
+    @DeleteMapping(value = "/lista-kupaca/{id}")
+    public ResponseEntity<Void> obrisiKupca(@PathVariable("id") Integer id){
+        Kupac kupac = kupacServis.findOne(id);
+        if(kupac!=null){
+            kupacServis.deleteKupac(kupac);
+            return new ResponseEntity<Void>(HttpStatus.OK);
+
+        }else{
+            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+
+        }
+    }
+
+
+    //CRUD operacije za prodavca
+
+    @RequestMapping(value = "/lista-prodavaca", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Collection<ProdavacDTO>> findAllProdavci() {
+        List<Prodavac> prodavci = prodavacServis.findAll();
+        List<ProdavacDTO> prodavacDTO = new ArrayList<>();
+        for(Prodavac p:prodavci){
+            prodavacDTO.add(new ProdavacDTO(p));
+        }
+        return new ResponseEntity<>(prodavacDTO, HttpStatus.OK);
+    }
 
 
 
@@ -76,7 +141,76 @@ public class KorisniciKontroler {
 
 
 
+    @PostMapping(value ="/lista-prodavaca", consumes = "application/json")
+    public ResponseEntity<ProdavacDTO> snimiProdavca(@RequestBody ProdavacDTO prodavacDTO){
+
+        Prodavac prodavac = new Prodavac();
+        prodavac.setIme(prodavacDTO.getIme());
+        prodavac.setPrezime(prodavacDTO.getPrezime());
+        prodavac.setAdresa(prodavacDTO.getAdresa());
+        prodavac.setKorisnicko(prodavacDTO.getKorisnicko());
+        prodavac.setSifra(prodavacDTO.getSifra());
+        prodavac.setPoslujeOd(prodavacDTO.getPoslujeOd());
+        prodavac.setImejl(prodavacDTO.getImejl());
+        prodavac.setNaziv(prodavacDTO.getNaziv());
+        prodavac.setBlokiran(false);
+
+        prodavac = prodavacServis.saveProdavac(prodavac);
+        return new ResponseEntity<ProdavacDTO>(new ProdavacDTO(prodavac), HttpStatus.CREATED);
+
+    }
+
+
+
+    @PutMapping(value ="/lista-prodavaca",consumes = "application/json")
+    public ResponseEntity<ProdavacDTO> izmeniProdavca(@RequestBody ProdavacDTO prodavacDTO){
+        Prodavac prodavac = prodavacServis.findOne(prodavacDTO.getId());
+        if(prodavac == null){
+            return new ResponseEntity<ProdavacDTO>(HttpStatus.BAD_REQUEST);
+        }
+        prodavac.setIme(prodavacDTO.getIme());
+        prodavac.setPrezime(prodavacDTO.getPrezime());
+        prodavac.setAdresa(prodavacDTO.getAdresa());
+        prodavac.setKorisnicko(prodavacDTO.getKorisnicko());
+        prodavac.setSifra(prodavacDTO.getSifra());
+        prodavac.setPoslujeOd(prodavacDTO.getPoslujeOd());
+        prodavac.setImejl(prodavacDTO.getImejl());
+        prodavac.setNaziv(prodavacDTO.getNaziv());
+
+        prodavacServis.saveProdavac(prodavac);
+        return new ResponseEntity<ProdavacDTO>(new ProdavacDTO(prodavac), HttpStatus.CREATED);
+
+
+
+    }
+
+    @DeleteMapping(value = "/lista-prodavaca/{id}")
+    public ResponseEntity<Void> obrisiProdavca(@PathVariable("id") Integer id){
+        Prodavac prodavac = prodavacServis.findOne(id);
+        if(prodavac!=null){
+            prodavacServis.deleteProdavac(prodavac);
+            return new ResponseEntity<Void>(HttpStatus.OK);
+
+        }else{
+            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
 
         }
+    }
+
+
+    //FIND Artikli od prodavca naprimer
+    @GetMapping(value = "/lista-prodavaca/{id}/lista-artikala")
+    public ResponseEntity<Collection<ArtikalDTO>> findArtikleByProdavac(@PathVariable("id") Integer id){
+        List<Artikal> artikli = artikliServis.findByProdavac(id);
+        List<ArtikalDTO> artikliDTO = new ArrayList<>();
+        for(Artikal a: artikli){
+            artikliDTO.add(new ArtikalDTO(a));
+        }
+        return new ResponseEntity<>(artikliDTO,HttpStatus.OK);
+    }
+
+
+
+}
 
 

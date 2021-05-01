@@ -23,4 +23,15 @@ public class ArtikliServis {
         return artikalDAO.findById(id).orElse(null);
     }
 
+    public Artikal saveArtikal(Artikal artikal){
+        return artikalDAO.save(artikal);
+    }
+
+    public void deleteArtikal(Artikal artikal){
+        artikalDAO.delete(artikal);
+    }
+
+    public List<Artikal> findByProdavac(Integer id){
+        return artikalDAO.findByProdavac_Id(id);
+    }
 }

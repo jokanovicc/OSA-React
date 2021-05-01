@@ -22,4 +22,13 @@ public class ProdavacServis {
     public Prodavac findOne(Integer id){
         return prodavacDAO.findById(id).orElse(null);
     }
+
+    public Prodavac saveProdavac(Prodavac prodavac){
+        return prodavacDAO.save(prodavac);
+
+    }
+
+    public void deleteProdavac(Prodavac prodavac){
+        prodavacDAO.delete(prodavac);
+    }
 }

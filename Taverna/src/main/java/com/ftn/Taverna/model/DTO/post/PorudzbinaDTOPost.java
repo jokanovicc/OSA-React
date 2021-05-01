@@ -1,0 +1,55 @@
+package com.ftn.Taverna.model.DTO.post;
+
+
+import com.ftn.Taverna.model.DTO.KupacDTO;
+import com.ftn.Taverna.model.Porudzbina;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.sql.Date;
+
+@Data
+@NoArgsConstructor
+public class PorudzbinaDTOPost implements Serializable {
+
+
+    private Integer id;
+
+    @NotEmpty
+    private Integer kupac;
+
+    @NotNull
+    private Date satnica;
+
+    @NotEmpty
+    private boolean dostavljeno;
+
+    @NotEmpty
+    private Integer ocena;
+
+    @NotBlank
+    private String komentar;
+
+    @NotEmpty
+    private boolean anonimanKomentar;
+
+    @NotEmpty
+    private boolean arhiviranKomentar;
+
+
+
+    public PorudzbinaDTOPost(Porudzbina porudzbina){
+        this.id = porudzbina.getId();
+        this.kupac = porudzbina.getKupac().getId();
+        this.satnica = porudzbina.getSatnica();
+        this.dostavljeno = porudzbina.isDostavljeno();
+        this.ocena = porudzbina.getOcena();
+        this.komentar = porudzbina.getKomentar();
+        this.anonimanKomentar = porudzbina.isAnonimanKomentar();
+        this.arhiviranKomentar = porudzbina.isArhiviranKomentar();
+    }
+}
