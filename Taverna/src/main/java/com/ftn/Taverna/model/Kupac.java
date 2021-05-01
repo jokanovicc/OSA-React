@@ -7,15 +7,6 @@ import javax.persistence.*;
 
 @Data
 @Entity
-public class Kupac {
-
-    @Id
-    private Integer id;
+public class Kupac extends KorisnikAbstract {
     private String adresa;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "korisnik_id")
-    @MapsId
-    private Korisnik korisnik;
-
 }

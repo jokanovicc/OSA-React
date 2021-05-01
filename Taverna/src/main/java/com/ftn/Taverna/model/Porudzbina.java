@@ -18,7 +18,6 @@ public class Porudzbina {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     private Date satnica;
     private boolean dostavljeno;
     private Integer ocena;

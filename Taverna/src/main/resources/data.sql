@@ -1,4 +1,6 @@
-insert into korisnik(blokiran, ime, korisnicko, prezime, sifra) values (false, 'Petar', 'petarp','Petrovic','123')
-insert into korisnik(blokiran, ime, korisnicko, prezime, sifra) values (false, 'Jovan', 'jovanj','Jovanovic','12345')
-insert into kupac(korisnik_id, adresa) values (1,'Perleska 21a Perlez')
-insert into prodavac(korisnik_id,adresa,imejl,naziv,posluje_od) values (2,'Partizanska 23a Kumane', 'jovanovic@gmail.com','Kumane DOO','1989-10-10')
+insert into kupac(blokiran, ime, korisnicko, prezime, sifra,adresa) values (false, 'Petar', 'petarp','Petrovic','123','Perlez');
+insert into kupac(blokiran, ime, korisnicko, prezime, sifra,adresa) values (false, 'Jovan', 'jovanj','Jovanovic','123','Cantavir');
+
+insert into prodavac(blokiran, ime, korisnicko, prezime, sifra,adresa,posluje_od,imejl, naziv) values (false, 'Mitar', ',mitar','Mitrevic','1234','Srpski Itebej','1989-10-10','mitar@gmail','Itebejski vuci');
+insert into artikal(cena,naziv,opis,putanja_do_slike,prodavac_id) values (2000,'Punjena vesalica','Ukusna','htpdgfdsfdg',1);
+insert into artikal(cena,naziv,opis,putanja_do_slike,prodavac_id) values (2400,'Punjene paprike','Socna','htpdgfdsfdg',1);

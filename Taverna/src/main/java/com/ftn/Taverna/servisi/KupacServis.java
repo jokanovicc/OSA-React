@@ -18,4 +18,7 @@ public class KupacServis {
         return kupacDAO.findAll();
     }
 
+    public Kupac findOne(Integer id){
+        return kupacDAO.findById(id).orElse(null);
+    }
 }

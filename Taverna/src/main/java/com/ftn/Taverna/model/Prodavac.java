@@ -10,18 +10,11 @@ import java.sql.Date;
 @Data
 @Entity
 @NoArgsConstructor
-public class Prodavac {
+public class Prodavac extends KorisnikAbstract {
 
-    @Id
-    private Integer id;
     private Date poslujeOd;
     private String imejl;
     private String adresa;
     private String naziv;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "korisnik_id")
-    @MapsId
-    private Korisnik korisnik;
 
 }
