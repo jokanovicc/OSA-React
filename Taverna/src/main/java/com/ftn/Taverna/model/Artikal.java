@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -20,5 +22,6 @@ public class Artikal {
     private String opis;
     private Double cena;
     private String putanjaDoSlike;
+
 
 }

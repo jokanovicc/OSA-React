@@ -4,11 +4,14 @@ package com.ftn.Taverna.kontroleri;
 import com.ftn.Taverna.model.Artikal;
 import com.ftn.Taverna.model.DTO.ArtikalDTO;
 import com.ftn.Taverna.model.DTO.KupacDTO;
+import com.ftn.Taverna.model.DTO.PorudzbinaDTO;
 import com.ftn.Taverna.model.DTO.ProdavacDTO;
 import com.ftn.Taverna.model.Kupac;
+import com.ftn.Taverna.model.Porudzbina;
 import com.ftn.Taverna.model.Prodavac;
 import com.ftn.Taverna.servisi.ArtikliServis;
 import com.ftn.Taverna.servisi.KupacServis;
+import com.ftn.Taverna.servisi.PorudzbinaServis;
 import com.ftn.Taverna.servisi.ProdavacServis;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,6 +35,8 @@ public class KorisniciKontroler {
     private ProdavacServis prodavacServis;
     @Autowired
     private ArtikliServis artikliServis;
+    @Autowired
+    private PorudzbinaServis porudzbinaServis;
 
 
     //CRUD operacije za kupca
@@ -209,6 +214,54 @@ public class KorisniciKontroler {
         return new ResponseEntity<>(artikliDTO,HttpStatus.OK);
     }
 
+
+    //Blokiraj korisnika
+
+    @PostMapping(value = "/lista-prodavaca/{id}")
+    public ResponseEntity<Void> blokirajProdavca(@PathVariable("id") Integer id){
+        Prodavac prodavac = prodavacServis.findOne(id);
+        if(prodavac!=null){
+            prodavac.setBlokiran(true);
+            prodavacServis.saveProdavac(prodavac);
+            return new ResponseEntity<Void>(HttpStatus.OK);
+
+        }else{
+                return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+
+        }
+
+    }
+
+    @PostMapping(value = "/lista-kupaca/{id}")
+    public ResponseEntity<Void> blokirajKupca(@PathVariable("id") Integer id){
+        Kupac kupac = kupacServis.findOne(id);
+        if(kupac!=null){
+            kupac.setBlokiran(true);
+            kupacServis.saveKupac(kupac);
+            return new ResponseEntity<Void>(HttpStatus.OK);
+
+        }else{
+            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+
+        }
+
+    }
+
+
+
+    //sve porudzbine kupca
+    @GetMapping(value = "/lista-kupaca/{id}/lista-porudzbina")
+    public ResponseEntity<Collection<PorudzbinaDTO>> findPorudzbineByKupac(@PathVariable("id") Integer id){
+        List<Porudzbina> porudzbine = porudzbinaServis.findByKupacId(id);
+        List<PorudzbinaDTO> porudzbinaDTO = new ArrayList<>();
+        for(Porudzbina p : porudzbine){
+            porudzbinaDTO.add(new PorudzbinaDTO(p));
+        }
+
+        return new ResponseEntity<>(porudzbinaDTO, HttpStatus.OK);
+
+
+    }
 
 
 }

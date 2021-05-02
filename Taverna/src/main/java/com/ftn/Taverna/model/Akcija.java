@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -19,8 +21,8 @@ public class Akcija {
     @ManyToOne
     private Prodavac prodavac;
 
-    @ManyToOne
-    private Artikal artikal;
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<Artikal> artikli = new ArrayList<>();
 
     private Integer procenat;
     private Date odKad;

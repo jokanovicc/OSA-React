@@ -6,3 +6,6 @@ insert into artikal(cena,naziv,opis,putanja_do_slike,prodavac_id) values (2000,'
 insert into artikal(cena,naziv,opis,putanja_do_slike,prodavac_id) values (2400,'Punjene paprike','Socna','htpdgfdsfdg',1);
 
 insert into porudzbina(anoniman_komentar,arhiviran_komentar,dostavljeno,komentar,ocena,satnica,kupac_id) values (FALSE,FALSE,TRUE,'Odlicna prodavnica',5,'2021-05-01',1);
+
+insert into akcija(do_kad,od_kad,procenat,tekst,prodavac_id) values ('2021-05-10','2021-07-10',20,'Majski popust',1);
+insert into akcija_artikli(akcija_id,artikli_id) values (1,1);

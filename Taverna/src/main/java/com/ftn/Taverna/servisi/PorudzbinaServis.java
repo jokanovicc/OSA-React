@@ -26,4 +26,8 @@ public class PorudzbinaServis {
         return porudzbinaDAO.save(porudzbina);
     }
 
+    public List<Porudzbina> findByKupacId(Integer id){
+        return porudzbinaDAO.findPorudzbinaByKupac_Id(id);
+    }
+
 }

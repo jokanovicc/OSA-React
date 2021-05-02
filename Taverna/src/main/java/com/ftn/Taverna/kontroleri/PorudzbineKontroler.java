@@ -104,4 +104,35 @@ public class PorudzbineKontroler {
     }
 
 
+    @PutMapping("dodaj-komentar")
+    public ResponseEntity<Void> dodajKomentar(@RequestBody PorudzbinaDTOPost porudzbinaDTOPost){
+        Porudzbina porudzbina = porudzbinaServis.findOne(porudzbinaDTOPost.getId());
+        if(porudzbina.isDostavljeno()){
+            porudzbina.setKomentar(porudzbinaDTOPost.getKomentar());
+            porudzbina.setOcena(porudzbinaDTOPost.getOcena());
+            porudzbina = porudzbinaServis.save(porudzbina);
+            return new ResponseEntity<Void>(HttpStatus.OK);
+        }else{
+            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+
+        }
+
+    }
+
+    @PutMapping("{id}/arhiviraj-komentar")
+    public ResponseEntity<Void> dodajKomentar(@PathVariable("id") Integer id) {
+        Porudzbina porudzbina = porudzbinaServis.findOne(id);
+        if(porudzbina!=null){
+            porudzbina.setArhiviranKomentar(true);
+            porudzbinaServis.save(porudzbina);
+            return new ResponseEntity<Void>(HttpStatus.OK);
+        }else{
+            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+
+        }
+
+
+
+    }
+
 }
