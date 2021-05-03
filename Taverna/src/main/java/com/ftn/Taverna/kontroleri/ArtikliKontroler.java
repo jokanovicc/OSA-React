@@ -125,12 +125,6 @@ public class ArtikliKontroler {
         akcija.setOdKad(akcijaDTOPost.getOdKad());
         akcija.setTekst(akcijaDTOPost.getTekst());
         akcija.setProcenat(akcijaDTOPost.getProcenat());
-        for (Integer i: akcijaDTOPost.getArtikli()) {
-            Artikal artikal = artikliServis.findOne(i);
-            akcija.getArtikli().add(artikal);
-
-        }
-
         akcija = akcijaServis.saveAkcija(akcija);
 
         return new ResponseEntity<AkcijaDTO>(new AkcijaDTO(akcija), HttpStatus.CREATED);

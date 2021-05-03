@@ -19,7 +19,6 @@ public class AkcijaDTO {
 
     private Integer id;
     private ProdavacDTO prodavac;
-    private List<ArtikalDTO> artikli = new ArrayList<>();
     private Integer procenat;
     private Date odKad;
     private Date doKad;
@@ -33,9 +32,6 @@ public class AkcijaDTO {
         this.odKad = akcija.getOdKad();
         this.doKad = akcija.getDoKad();
         this.tekst = akcija.getTekst();
-        for (Artikal a: akcija.getArtikli()) {
-            this.artikli.add(new ArtikalDTO(a));
-        }
     }
 
 

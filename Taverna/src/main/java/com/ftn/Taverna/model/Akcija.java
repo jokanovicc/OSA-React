@@ -7,7 +7,9 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -21,8 +23,10 @@ public class Akcija {
     @ManyToOne
     private Prodavac prodavac;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    private List<Artikal> artikli = new ArrayList<>();
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(name="artikli_akcije", joinColumns = {@JoinColumn(name = "akcija_id")},
+    inverseJoinColumns = {@JoinColumn(name = "artikal_id")})
+    private Set<Artikal> artikli = new HashSet<>();
 
     private Integer procenat;
     private Date odKad;

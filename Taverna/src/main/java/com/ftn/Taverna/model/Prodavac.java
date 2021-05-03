@@ -6,6 +6,10 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -16,5 +20,11 @@ public class Prodavac extends KorisnikAbstract {
     private String imejl;
     private String adresa;
     private String naziv;
+
+    @OneToMany(cascade = {CascadeType.ALL},fetch = FetchType.LAZY, mappedBy = "prodavac")
+    private Set<Artikal> artikli = new HashSet<Artikal>();
+
+    @OneToMany(cascade = {CascadeType.ALL},fetch = FetchType.LAZY, mappedBy = "prodavac")
+    private Set<Akcija> akcije = new HashSet<Akcija>();
 
 }

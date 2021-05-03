@@ -26,8 +26,6 @@ public class StavkaDTO implements Serializable {
     @NotNull
     private PorudzbinaDTO porudzbina;
 
-
-
     public StavkaDTO(Stavka stavka) {
         this(stavka.getId(),stavka.getKolicina(),new ArtikalDTO(stavka.getArtikal()), new PorudzbinaDTO(stavka.getPorudzbina()));
 

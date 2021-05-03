@@ -6,7 +6,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -22,6 +24,9 @@ public class Artikal {
     private String opis;
     private Double cena;
     private String putanjaDoSlike;
+
+    @ManyToMany(mappedBy = "artikli")
+    private Set<Akcija> akcije = new HashSet<Akcija>();
 
 
 }

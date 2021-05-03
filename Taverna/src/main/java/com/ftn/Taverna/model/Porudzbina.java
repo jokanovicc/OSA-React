@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -23,4 +26,7 @@ public class Porudzbina {
     private String komentar;
     private boolean anonimanKomentar;
     private boolean arhiviranKomentar;
+
+    @OneToMany(cascade = {CascadeType.ALL},fetch = FetchType.LAZY, mappedBy = "porudzbina")
+    private Set<Stavka> stavke = new HashSet<Stavka>();
 }
