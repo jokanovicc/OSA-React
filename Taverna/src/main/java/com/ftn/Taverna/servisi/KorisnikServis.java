@@ -6,6 +6,8 @@ import com.ftn.Taverna.model.Korisnik;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class KorisnikServis {
 
@@ -22,6 +24,15 @@ public class KorisnikServis {
         return korisnikDAO.findById(id).orElse(null);
     }
 
+
+
+    public Korisnik findByUsername(String username) {
+        Optional<Korisnik> user = korisnikDAO.findFirstByKorisnicko(username);
+        if (!user.isEmpty()) {
+            return user.get();
+        }
+        return null;
+    }
 
 
 

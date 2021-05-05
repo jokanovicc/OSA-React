@@ -1,8 +1,8 @@
 
-INSERT INTO KORISNIK(blokiran,ime,korisnicko,prezime,roles,sifra) VALUES (0,'Petar','petarp','Petrovic','KUPAC','123');
-INSERT INTO KORISNIK(blokiran,ime,korisnicko,prezime,roles,sifra) VALUES (0,'Jovan','jovanj','Jovanovic','KUPAC','321');
+INSERT INTO KORISNIK(blokiran,ime,korisnicko,prezime,roles,sifra) VALUES (0,'Petar','petarp','Petrovic','KUPAC','$2y$12$ny/3y0yP6lQyOwCRajkWyud1gS6kLhk/BGsrMisU632Wy1OQhAaQG');
+INSERT INTO KORISNIK(blokiran,ime,korisnicko,prezime,roles,sifra) VALUES (0,'Jovan','jovanj','Jovanovic','KUPAC','$2y$12$G0klgeSwrtNjUrk9LpaeX.1mj/m/emQ40fwIlwwUvHcTi7LaS7HiG ');
 
-INSERT INTO KORISNIK(blokiran,ime,korisnicko,prezime,roles,sifra) VALUES (0,'Mitar','mitarm','Mitrovic','PRODAVAC','123');
+INSERT INTO KORISNIK(blokiran,ime,korisnicko,prezime,roles,sifra) VALUES (0,'Mitar','mitarm','Mitrovic','PRODAVAC','$2y$12$/jqXv7aS2QrAX22O4R1lE.A4kSED2MhT6g8MAtWbPbkw44jcAfJDm ');
 
 INSERT INTO KUPAC(korisnik_id, adresa) VALUES (1, 'Mileticeva 21 Zrenjanin');
 INSERT INTO KUPAC(korisnik_id, adresa) VALUES (2, 'Zarka Zrenjanina 42a Zrenjanin');

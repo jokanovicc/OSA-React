@@ -2,6 +2,7 @@ package com.ftn.Taverna.model.DTO;
 
 import com.ftn.Taverna.model.Korisnik;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -10,6 +11,7 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 
 @Data
+@NoArgsConstructor
 public class KorisnikDTO {
 
     private Integer id;
