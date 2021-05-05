@@ -6,11 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 
 @Data
 @NoArgsConstructor
 public class KupacDTOPost {
 
+    @NotEmpty
     private Integer id;
     @NotBlank
     private String adresa;

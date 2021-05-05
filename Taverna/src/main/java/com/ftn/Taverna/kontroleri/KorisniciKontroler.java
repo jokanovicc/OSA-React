@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -36,6 +37,7 @@ public class KorisniciKontroler {
 
     //CRUD operacije za kupca
 
+    @PreAuthorize("hasAnyRole('ADMIN','PRODAVAC')")
     @RequestMapping(value = "/lista-kupaca", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Collection<KupacDTOPost>> findAllKupac() {
         List<Kupac> kupci = kupacServis.findAll();
@@ -58,7 +60,7 @@ public class KorisniciKontroler {
         }
 
 
-
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(value ="/lista-kupaca", consumes = "application/json")
     public ResponseEntity<KupacDTO> snimiKupca(@RequestBody KupacDTOPost kupacDTO){
 
@@ -86,7 +88,7 @@ public class KorisniciKontroler {
     }
 
 
-
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PutMapping(value ="/lista-kupaca",consumes = "application/json")
     public ResponseEntity<KupacDTOPost> izmeniKupca(@RequestBody KupacDTOPost kupacDTO){
         Kupac kupac = kupacServis.findOne(kupacDTO.getId());
@@ -108,7 +110,7 @@ public class KorisniciKontroler {
 
     }
 
-
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @DeleteMapping(value = "/lista-kupaca/{id}")
     public ResponseEntity<Void> obrisiKupca(@PathVariable("id") Integer id){
         Kupac kupac = kupacServis.findOne(id);

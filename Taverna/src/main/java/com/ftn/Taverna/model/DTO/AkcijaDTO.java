@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,12 +19,25 @@ import java.util.List;
 public class AkcijaDTO {
 
 
+    @NotEmpty
     private Integer id;
+
+    @NotNull
     private ProdavacDTO prodavac;
+
+    @NotEmpty
     private Integer procenat;
+
+    @NotNull
     private Date odKad;
+
+    @NotEmpty
     private Date doKad;
+
+    @NotEmpty
     private String tekst;
+
+
 
 
     public AkcijaDTO(Akcija akcija){

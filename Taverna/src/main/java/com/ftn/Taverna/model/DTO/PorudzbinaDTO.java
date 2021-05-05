@@ -18,6 +18,7 @@ import java.sql.Date;
 public class PorudzbinaDTO implements Serializable {
 
 
+    @NotEmpty
     private Integer id;
     @NotNull
     private KupacDTO kupac;

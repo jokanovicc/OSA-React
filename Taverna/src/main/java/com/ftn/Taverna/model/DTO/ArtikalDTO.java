@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +18,10 @@ import java.util.List;
 @NoArgsConstructor
 public class ArtikalDTO implements Serializable {
 
+    @NotEmpty
     private Integer id;
 
-    @NotEmpty
+    @NotNull
     private ProdavacDTO prodavac;
     @NotBlank
     private String naziv;

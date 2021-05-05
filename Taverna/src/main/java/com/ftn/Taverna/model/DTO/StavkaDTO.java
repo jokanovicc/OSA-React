@@ -16,6 +16,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class StavkaDTO implements Serializable {
 
+    @NotEmpty
     private Integer id;
 
     @NotEmpty

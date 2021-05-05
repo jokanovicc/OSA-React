@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -59,6 +60,7 @@ public class ArtikliKontroler {
     }
 
 
+    @PreAuthorize("hasAnyRole('ADMIN','PRODAVAC')")
     @PostMapping
     public ResponseEntity<ArtikalDTO> snimiArtikal(@RequestBody ArtikalDTOPost artikalDTO){
         Artikal artikal = new Artikal();
@@ -79,6 +81,7 @@ public class ArtikliKontroler {
 
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','PRODAVAC')")
     @PutMapping
     public ResponseEntity<ArtikalDTO> izmeniArtikal(@RequestBody ArtikalDTOPost artikalDTO){
         Artikal artikal = artikliServis.findOne(artikalDTO.getId());
@@ -103,6 +106,7 @@ public class ArtikliKontroler {
 
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','PRODAVAC')")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> obrisiArtikal(@PathVariable("id") Integer id){
         Artikal artikal = artikliServis.findOne(id);
@@ -116,6 +120,7 @@ public class ArtikliKontroler {
         }
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','PRODAVAC')")
     @PostMapping(value = "/lista-akcija")
     public ResponseEntity<AkcijaDTO> saveAkcija(@RequestBody AkcijaDTOPost akcijaDTOPost){
         Akcija akcija = new Akcija();

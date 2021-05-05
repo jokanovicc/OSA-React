@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -103,7 +104,7 @@ public class PorudzbineKontroler {
 
     }
 
-
+    @PreAuthorize("hasAnyRole('ADMIN','KUPAC')")
     @PutMapping("dodaj-komentar")
     public ResponseEntity<Void> dodajKomentar(@RequestBody PorudzbinaDTOPost porudzbinaDTOPost){
         Porudzbina porudzbina = porudzbinaServis.findOne(porudzbinaDTOPost.getId());
@@ -118,7 +119,7 @@ public class PorudzbineKontroler {
         }
 
     }
-
+    @PreAuthorize("hasAnyRole('ADMIN','PRODAVAC')")
     @PutMapping("{id}/arhiviraj-komentar")
     public ResponseEntity<Void> dodajKomentar(@PathVariable("id") Integer id) {
         Porudzbina porudzbina = porudzbinaServis.findOne(id);

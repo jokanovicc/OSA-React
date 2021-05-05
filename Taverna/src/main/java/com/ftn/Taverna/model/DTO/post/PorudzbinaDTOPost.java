@@ -17,6 +17,7 @@ import java.sql.Date;
 public class PorudzbinaDTOPost implements Serializable {
 
 
+    @NotNull
     private Integer id;
 
     @NotEmpty
