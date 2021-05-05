@@ -1,18 +1,11 @@
 package com.ftn.Taverna.kontroleri;
 
 
-import com.ftn.Taverna.model.Artikal;
-import com.ftn.Taverna.model.DTO.ArtikalDTO;
-import com.ftn.Taverna.model.DTO.KupacDTO;
-import com.ftn.Taverna.model.DTO.PorudzbinaDTO;
-import com.ftn.Taverna.model.DTO.ProdavacDTO;
-import com.ftn.Taverna.model.Kupac;
-import com.ftn.Taverna.model.Porudzbina;
-import com.ftn.Taverna.model.Prodavac;
-import com.ftn.Taverna.servisi.ArtikliServis;
-import com.ftn.Taverna.servisi.KupacServis;
-import com.ftn.Taverna.servisi.PorudzbinaServis;
-import com.ftn.Taverna.servisi.ProdavacServis;
+import com.ftn.Taverna.model.*;
+import com.ftn.Taverna.model.DTO.*;
+import com.ftn.Taverna.model.DTO.post.KupacDTOPost;
+import com.ftn.Taverna.model.DTO.post.ProdavacDTOPost;
+import com.ftn.Taverna.servisi.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -37,16 +30,18 @@ public class KorisniciKontroler {
     private ArtikliServis artikliServis;
     @Autowired
     private PorudzbinaServis porudzbinaServis;
+    @Autowired
+    private KorisnikServis korisnikServis;
 
 
     //CRUD operacije za kupca
 
     @RequestMapping(value = "/lista-kupaca", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Collection<KupacDTO>> findAllKupac() {
+    public ResponseEntity<Collection<KupacDTOPost>> findAllKupac() {
         List<Kupac> kupci = kupacServis.findAll();
-        List<KupacDTO> kupciDTO = new ArrayList<>();
+        List<KupacDTOPost> kupciDTO = new ArrayList<>();
         for(Kupac k: kupci){
-            kupciDTO.add(new KupacDTO(k));
+            kupciDTO.add(new KupacDTOPost(k));
         }
         return new ResponseEntity<>(kupciDTO, HttpStatus.OK);
 
@@ -58,47 +53,56 @@ public class KorisniciKontroler {
             Kupac kupac = kupacServis.findOne(id);
             if(kupac == null){
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
             }
             return new ResponseEntity<>(new KupacDTO(kupac), HttpStatus.OK);
         }
 
 
 
-
-
     @PostMapping(value ="/lista-kupaca", consumes = "application/json")
-    public ResponseEntity<KupacDTO> snimiKupca(@RequestBody KupacDTO kupacDTO){
+    public ResponseEntity<KupacDTO> snimiKupca(@RequestBody KupacDTOPost kupacDTO){
 
-        Kupac kupac = new Kupac();
-        kupac.setIme(kupacDTO.getIme());
-        kupac.setPrezime(kupacDTO.getPrezime());
-        kupac.setAdresa(kupacDTO.getAdresa());
-        kupac.setKorisnicko(kupacDTO.getKorisnicko());
-        kupac.setSifra(kupacDTO.getSifra());
-        kupac.setBlokiran(false);
+        Korisnik noviKorisnik = new Korisnik();
+        Kupac noviKupac = new Kupac();
 
-        kupac = kupacServis.saveKupac(kupac);
-        return new ResponseEntity<KupacDTO>(new KupacDTO(kupac), HttpStatus.CREATED);
+
+        noviKorisnik.setKorisnicko(kupacDTO.getKorisnicko());
+        noviKorisnik.setSifra(kupacDTO.getSifra());
+        noviKorisnik.setIme(kupacDTO.getIme());
+        noviKorisnik.setPrezime(kupacDTO.getPrezime());
+        noviKorisnik.setBlokiran(false);
+        noviKorisnik.setRoles(Roles.KUPAC);
+
+        korisnikServis.save(noviKorisnik);
+
+
+        noviKupac.setKorisnik(noviKorisnik);
+        noviKupac.setId(noviKorisnik.getId());
+        noviKupac.setAdresa(kupacDTO.getAdresa());
+
+        noviKupac = kupacServis.saveKupac(noviKupac);
+        return new ResponseEntity<KupacDTO>(new KupacDTO(noviKupac), HttpStatus.CREATED);
 
     }
 
 
 
     @PutMapping(value ="/lista-kupaca",consumes = "application/json")
-    public ResponseEntity<KupacDTO> izmeniKupca(@RequestBody KupacDTO kupacDTO){
+    public ResponseEntity<KupacDTOPost> izmeniKupca(@RequestBody KupacDTOPost kupacDTO){
         Kupac kupac = kupacServis.findOne(kupacDTO.getId());
         if(kupac == null){
-            return new ResponseEntity<KupacDTO>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<KupacDTOPost>(HttpStatus.BAD_REQUEST);
         }
-        kupac.setIme(kupacDTO.getIme());
-        kupac.setPrezime(kupacDTO.getPrezime());
+
+        kupac.getKorisnik().setKorisnicko(kupacDTO.getKorisnicko());
+        kupac.getKorisnik().setSifra(kupacDTO.getSifra());
+        kupac.getKorisnik().setIme(kupacDTO.getIme());
+        kupac.getKorisnik().setPrezime(kupacDTO.getPrezime());
         kupac.setAdresa(kupacDTO.getAdresa());
-        kupac.setKorisnicko(kupacDTO.getKorisnicko());
-        kupac.setSifra(kupacDTO.getSifra());
+
 
         kupacServis.saveKupac(kupac);
-        return new ResponseEntity<KupacDTO>(new KupacDTO(kupac), HttpStatus.CREATED);
+        return new ResponseEntity<KupacDTOPost>(new KupacDTOPost(kupac), HttpStatus.CREATED);
 
 
 
@@ -147,43 +151,54 @@ public class KorisniciKontroler {
 
 
     @PostMapping(value ="/lista-prodavaca", consumes = "application/json")
-    public ResponseEntity<ProdavacDTO> snimiProdavca(@RequestBody ProdavacDTO prodavacDTO){
+    public ResponseEntity<ProdavacDTOPost> snimiProdavca(@RequestBody ProdavacDTOPost prodavacDTO){
 
-        Prodavac prodavac = new Prodavac();
-        prodavac.setIme(prodavacDTO.getIme());
-        prodavac.setPrezime(prodavacDTO.getPrezime());
-        prodavac.setAdresa(prodavacDTO.getAdresa());
-        prodavac.setKorisnicko(prodavacDTO.getKorisnicko());
-        prodavac.setSifra(prodavacDTO.getSifra());
-        prodavac.setPoslujeOd(prodavacDTO.getPoslujeOd());
-        prodavac.setImejl(prodavacDTO.getImejl());
-        prodavac.setNaziv(prodavacDTO.getNaziv());
-        prodavac.setBlokiran(false);
+        Korisnik noviKorisnik = new Korisnik();
+        Prodavac noviProdavac = new Prodavac();
 
-        prodavac = prodavacServis.saveProdavac(prodavac);
-        return new ResponseEntity<ProdavacDTO>(new ProdavacDTO(prodavac), HttpStatus.CREATED);
+
+        noviKorisnik.setKorisnicko(prodavacDTO.getKorisnicko());
+        noviKorisnik.setSifra(prodavacDTO.getSifra());
+        noviKorisnik.setIme(prodavacDTO.getIme());
+        noviKorisnik.setPrezime(prodavacDTO.getPrezime());
+        noviKorisnik.setBlokiran(false);
+        noviKorisnik.setRoles(Roles.KUPAC);
+
+        korisnikServis.save(noviKorisnik);
+
+
+        noviProdavac.setKorisnik(noviKorisnik);
+        noviProdavac.setId(noviKorisnik.getId());
+        noviProdavac.setAdresa(prodavacDTO.getAdresa());
+        noviProdavac.setNaziv(prodavacDTO.getNaziv());
+        noviProdavac.setImejl(prodavacDTO.getImejl());
+        noviProdavac.setPoslujeOd(prodavacDTO.getPoslujeOd());
+
+        noviProdavac = prodavacServis.saveProdavac(noviProdavac);
+        return new ResponseEntity<ProdavacDTOPost>(new ProdavacDTOPost(noviProdavac), HttpStatus.CREATED);
 
     }
 
 
 
     @PutMapping(value ="/lista-prodavaca",consumes = "application/json")
-    public ResponseEntity<ProdavacDTO> izmeniProdavca(@RequestBody ProdavacDTO prodavacDTO){
+    public ResponseEntity<ProdavacDTOPost> izmeniProdavca(@RequestBody ProdavacDTOPost prodavacDTO){
         Prodavac prodavac = prodavacServis.findOne(prodavacDTO.getId());
         if(prodavac == null){
-            return new ResponseEntity<ProdavacDTO>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<ProdavacDTOPost>(HttpStatus.BAD_REQUEST);
         }
-        prodavac.setIme(prodavacDTO.getIme());
-        prodavac.setPrezime(prodavacDTO.getPrezime());
+        prodavac.getKorisnik().setIme(prodavacDTO.getIme());
+        prodavac.getKorisnik().setPrezime(prodavacDTO.getPrezime());
         prodavac.setAdresa(prodavacDTO.getAdresa());
-        prodavac.setKorisnicko(prodavacDTO.getKorisnicko());
-        prodavac.setSifra(prodavacDTO.getSifra());
+        prodavac.getKorisnik().setKorisnicko(prodavacDTO.getKorisnicko());
+        prodavac.getKorisnik().setSifra(prodavacDTO.getSifra());
+
         prodavac.setPoslujeOd(prodavacDTO.getPoslujeOd());
         prodavac.setImejl(prodavacDTO.getImejl());
         prodavac.setNaziv(prodavacDTO.getNaziv());
 
         prodavacServis.saveProdavac(prodavac);
-        return new ResponseEntity<ProdavacDTO>(new ProdavacDTO(prodavac), HttpStatus.CREATED);
+        return new ResponseEntity<ProdavacDTOPost>(new ProdavacDTOPost(prodavac), HttpStatus.CREATED);
 
 
 
@@ -217,31 +232,16 @@ public class KorisniciKontroler {
 
     //Blokiraj korisnika
 
-    @PostMapping(value = "/lista-prodavaca/{id}")
-    public ResponseEntity<Void> blokirajProdavca(@PathVariable("id") Integer id){
-        Prodavac prodavac = prodavacServis.findOne(id);
-        if(prodavac!=null){
-            prodavac.setBlokiran(true);
-            prodavacServis.saveProdavac(prodavac);
+    @PutMapping(value = "/blokiranje/{id}")
+    public ResponseEntity<Void> blokirajKorisnika(@PathVariable("id") Integer id){
+        Korisnik korisnik = korisnikServis.findOne(id);
+        if(korisnik!=null){
+            korisnik.setBlokiran(true);
+            korisnikServis.save(korisnik);
             return new ResponseEntity<Void>(HttpStatus.OK);
 
         }else{
                 return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
-
-        }
-
-    }
-
-    @PostMapping(value = "/lista-kupaca/{id}")
-    public ResponseEntity<Void> blokirajKupca(@PathVariable("id") Integer id){
-        Kupac kupac = kupacServis.findOne(id);
-        if(kupac!=null){
-            kupac.setBlokiran(true);
-            kupacServis.saveKupac(kupac);
-            return new ResponseEntity<Void>(HttpStatus.OK);
-
-        }else{
-            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
 
         }
 

@@ -5,26 +5,21 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
-public class KupacDTO extends KorisnikAbstractDTO implements Serializable {
+public class KupacDTO implements Serializable {
 
     private Integer id;
     @NotBlank
     private String adresa;
+    private KorisnikDTO korisnik;
 
     public KupacDTO(Kupac kupac){
         this.setId(kupac.getId());
-        this.setIme(kupac.getIme());
-        this.setPrezime(kupac.getPrezime());
         this.setAdresa(kupac.getAdresa());
-        this.setKorisnicko(kupac.getKorisnicko());
-        this.setBlokiran(kupac.isBlokiran());
-        this.setSifra(kupac.getSifra());
-
+        this.korisnik = new KorisnikDTO(kupac.getKorisnik());
 
     }
 

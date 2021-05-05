@@ -14,7 +14,17 @@ import java.util.Set;
 @Data
 @Entity
 @NoArgsConstructor
-public class Prodavac extends KorisnikAbstract {
+public class Prodavac {
+
+
+    @Id
+    private Integer id;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "korisnik_id")
+    @MapsId
+    private Korisnik korisnik;
+
+
 
     private Date poslujeOd;
     private String imejl;

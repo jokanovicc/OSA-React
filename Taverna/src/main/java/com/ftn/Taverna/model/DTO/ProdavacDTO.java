@@ -1,6 +1,6 @@
 package com.ftn.Taverna.model.DTO;
 
-import com.ftn.Taverna.model.Kupac;
+import com.ftn.Taverna.model.Korisnik;
 import com.ftn.Taverna.model.Prodavac;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,8 +12,9 @@ import java.sql.Date;
 
 @Data
 @NoArgsConstructor
-public class ProdavacDTO extends KorisnikAbstractDTO implements Serializable {
+public class ProdavacDTO implements Serializable {
 
+    private Integer id;
     @NotNull
     private Date poslujeOd;
     @NotBlank
@@ -22,18 +23,14 @@ public class ProdavacDTO extends KorisnikAbstractDTO implements Serializable {
     private String adresa;
     @NotBlank
     private String naziv;
-
-
+    @NotNull
+    private KorisnikDTO korisnik;
 
 
     public ProdavacDTO(Prodavac prodavac){
-        this.setId(prodavac.getId());
-        this.setIme(prodavac.getIme());
-        this.setPrezime(prodavac.getPrezime());
+        this.id = prodavac.getId();
+        this.setKorisnik(new KorisnikDTO(prodavac.getKorisnik()));
         this.setAdresa(prodavac.getAdresa());
-        this.setKorisnicko(prodavac.getKorisnicko());
-        this.setBlokiran(prodavac.isBlokiran());
-        this.setSifra(prodavac.getSifra());
         this.setPoslujeOd(prodavac.getPoslujeOd());
         this.setImejl(prodavac.getImejl());
         this.setNaziv(prodavac.getNaziv());
