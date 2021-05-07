@@ -1,32 +1,31 @@
 package com.ftn.Taverna.servisi;
 
-import com.ftn.Taverna.dao.KupacDAO;
+import com.ftn.Taverna.repository.KupacRepository;
 import com.ftn.Taverna.model.Kupac;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class KupacServis {
 
     @Autowired
-    private KupacDAO kupacDAO;
+    private KupacRepository kupacRepository;
 
     public List<Kupac> findAll(){
-        return kupacDAO.findAll();
+        return kupacRepository.findAll();
     }
 
     public Kupac findOne(Integer id){
-        return kupacDAO.findById(id).orElse(null);
+        return kupacRepository.findById(id).orElse(null);
     }
 
     public Kupac saveKupac(Kupac kupac){
-        return kupacDAO.save(kupac);
+        return kupacRepository.save(kupac);
     }
 
     public void deleteKupac(Kupac kupac){
-        kupacDAO.delete(kupac);
+        kupacRepository.delete(kupac);
     }
 }

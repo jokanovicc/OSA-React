@@ -1,9 +1,7 @@
 package com.ftn.Taverna.servisi;
 
-import com.ftn.Taverna.dao.ArtikalDAO;
+import com.ftn.Taverna.repository.ArtikalRepository;
 import com.ftn.Taverna.model.Artikal;
-import com.ftn.Taverna.model.DTO.ArtikalDTO;
-import com.ftn.Taverna.model.Kupac;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,25 +11,25 @@ import java.util.List;
 public class ArtikliServis {
 
     @Autowired
-    private ArtikalDAO artikalDAO;
+    private ArtikalRepository artikalRepository;
 
     public List<Artikal> findAll(){
-        return artikalDAO.findAll();
+        return artikalRepository.findAll();
     }
 
     public Artikal findOne(Integer id){
-        return artikalDAO.findById(id).orElse(null);
+        return artikalRepository.findById(id).orElse(null);
     }
 
     public Artikal saveArtikal(Artikal artikal){
-        return artikalDAO.save(artikal);
+        return artikalRepository.save(artikal);
     }
 
     public void deleteArtikal(Artikal artikal){
-        artikalDAO.delete(artikal);
+        artikalRepository.delete(artikal);
     }
 
     public List<Artikal> findByProdavac(Integer id){
-        return artikalDAO.findByProdavac_Id(id);
+        return artikalRepository.findByProdavac_Id(id);
     }
 }

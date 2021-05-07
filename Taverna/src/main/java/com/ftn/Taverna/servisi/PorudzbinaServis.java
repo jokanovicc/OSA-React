@@ -1,7 +1,7 @@
 package com.ftn.Taverna.servisi;
 
 
-import com.ftn.Taverna.dao.PorudzbinaDAO;
+import com.ftn.Taverna.repository.PorudzbinaRepository;
 import com.ftn.Taverna.model.Porudzbina;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ import java.util.List;
 public class PorudzbinaServis {
 
     @Autowired
-    private PorudzbinaDAO porudzbinaDAO;
+    private PorudzbinaRepository porudzbinaDAO;
 
     public List<Porudzbina> findAll(){
         return porudzbinaDAO.findAll();

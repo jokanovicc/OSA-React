@@ -1,6 +1,6 @@
 package com.ftn.Taverna.servisi;
 
-import com.ftn.Taverna.dao.AkcijaDAO;
+import com.ftn.Taverna.repository.AkcijaRepository;
 import com.ftn.Taverna.model.Akcija;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,13 +11,13 @@ import java.util.List;
 public class AkcijaServis {
 
     @Autowired
-    private AkcijaDAO akcijaDAO;
+    private AkcijaRepository akcijaRepository;
 
     public List<Akcija> findAll(){
-        return akcijaDAO.findAll();
+        return akcijaRepository.findAll();
     }
 
     public Akcija saveAkcija(Akcija akcija){
-        return akcijaDAO.save(akcija);
+        return akcijaRepository.save(akcija);
     }
 }

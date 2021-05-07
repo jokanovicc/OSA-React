@@ -1,8 +1,6 @@
-package com.ftn.Taverna.model.DTO;
+package com.ftn.Taverna.web.kontroleri.DTO;
 
-import com.ftn.Taverna.model.Akcija;
 import com.ftn.Taverna.model.Artikal;
-import com.ftn.Taverna.model.Prodavac;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,8 +8,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Data

@@ -1,10 +1,10 @@
-package com.ftn.Taverna.kontroleri;
+package com.ftn.Taverna.web.kontroleri;
 
-import com.ftn.Taverna.dao.KorisnikDAO;
-import com.ftn.Taverna.model.DTO.KorisnikDTO;
-import com.ftn.Taverna.model.DTO.KupacDTO;
-import com.ftn.Taverna.model.DTO.post.KupacDTOPost;
-import com.ftn.Taverna.model.DTO.post.ProdavacDTOPost;
+import com.ftn.Taverna.repository.KorisnikRepository;
+import com.ftn.Taverna.web.kontroleri.DTO.KorisnikDTO;
+import com.ftn.Taverna.web.kontroleri.DTO.KupacDTO;
+import com.ftn.Taverna.web.kontroleri.DTO.post.KupacDTOPost;
+import com.ftn.Taverna.web.kontroleri.DTO.post.ProdavacDTOPost;
 import com.ftn.Taverna.model.Korisnik;
 import com.ftn.Taverna.model.Kupac;
 import com.ftn.Taverna.model.Prodavac;
@@ -57,7 +57,7 @@ public class LoginKontroler {
     ProdavacServis prodavacServis;
 
     @Autowired
-    KorisnikDAO korisnikDAO;
+    KorisnikRepository korisnikRepository;
 
 
 
@@ -94,7 +94,7 @@ public class LoginKontroler {
     @PostMapping(value ="/registracija-kupac", consumes = "application/json")
     public ResponseEntity<KupacDTO> snimiKupca(@RequestBody @Validated KupacDTOPost kupacDTO){
 
-        Optional<Korisnik> user = korisnikDAO.findFirstByKorisnicko(kupacDTO.getKorisnicko());
+        Optional<Korisnik> user = korisnikRepository.findFirstByKorisnicko(kupacDTO.getKorisnicko());
         if(user.isPresent()){
             return null;
         }
@@ -125,7 +125,7 @@ public class LoginKontroler {
     @PostMapping(value ="/registracija-prodavac", consumes = "application/json")
     public ResponseEntity<ProdavacDTOPost> snimiProdavca(@RequestBody @Validated ProdavacDTOPost prodavacDTO){
 
-        Optional<Korisnik> user = korisnikDAO.findFirstByKorisnicko(prodavacDTO.getKorisnicko());
+        Optional<Korisnik> user = korisnikRepository.findFirstByKorisnicko(prodavacDTO.getKorisnicko());
         if(user.isPresent()){
             return null;
         }

@@ -1,11 +1,11 @@
-package com.ftn.Taverna.dao;
+package com.ftn.Taverna.repository;
 
 import com.ftn.Taverna.model.Korisnik;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface KorisnikDAO extends JpaRepository<Korisnik, Integer> {
+public interface KorisnikRepository extends JpaRepository<Korisnik, Integer> {
 
     Optional<Korisnik> findFirstByKorisnicko(String username);
 }

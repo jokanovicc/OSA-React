@@ -1,4 +1,4 @@
-package com.ftn.Taverna.model.DTO;
+package com.ftn.Taverna.web.kontroleri.DTO;
 
 import com.ftn.Taverna.model.Kupac;
 import lombok.Data;

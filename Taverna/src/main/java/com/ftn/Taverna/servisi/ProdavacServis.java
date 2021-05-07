@@ -1,7 +1,6 @@
 package com.ftn.Taverna.servisi;
 
-import com.ftn.Taverna.dao.ProdavacDAO;
-import com.ftn.Taverna.model.Kupac;
+import com.ftn.Taverna.repository.ProdavacRepository;
 import com.ftn.Taverna.model.Prodavac;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,23 +11,23 @@ import java.util.List;
 public class ProdavacServis {
 
     @Autowired
-    private ProdavacDAO prodavacDAO;
+    private ProdavacRepository prodavacRepository;
 
 
     public List<Prodavac> findAll(){
-        return prodavacDAO.findAll();
+        return prodavacRepository.findAll();
     }
 
     public Prodavac findOne(Integer id){
-        return prodavacDAO.findById(id).orElse(null);
+        return prodavacRepository.findById(id).orElse(null);
     }
 
     public Prodavac saveProdavac(Prodavac prodavac){
-        return prodavacDAO.save(prodavac);
+        return prodavacRepository.save(prodavac);
 
     }
 
     public void deleteProdavac(Prodavac prodavac){
-        prodavacDAO.delete(prodavac);
+        prodavacRepository.delete(prodavac);
     }
 }

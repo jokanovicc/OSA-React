@@ -1,13 +1,9 @@
-package com.ftn.Taverna.model.DTO;
+package com.ftn.Taverna.web.kontroleri.DTO;
 
 import com.ftn.Taverna.model.Korisnik;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 
 @Data

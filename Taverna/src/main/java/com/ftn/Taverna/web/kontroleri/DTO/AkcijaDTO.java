@@ -1,54 +1,48 @@
-package com.ftn.Taverna.model.DTO.post;
+package com.ftn.Taverna.web.kontroleri.DTO;
 
 
 import com.ftn.Taverna.model.Akcija;
-import com.ftn.Taverna.model.Artikal;
-import com.ftn.Taverna.model.DTO.ArtikalDTO;
-import com.ftn.Taverna.model.DTO.ProdavacDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
-public class AkcijaDTOPost {
+public class AkcijaDTO {
+
 
     @NotEmpty
     private Integer id;
 
-    @NotEmpty
-    private Integer prodavac;
+    @NotNull
+    private ProdavacDTO prodavac;
+
     @NotEmpty
     private Integer procenat;
 
     @NotNull
     private Date odKad;
 
-    @NotNull
+    @NotEmpty
     private Date doKad;
 
-    @NotBlank
+    @NotEmpty
     private String tekst;
 
 
-    public AkcijaDTOPost(Akcija akcija){
+
+
+    public AkcijaDTO(Akcija akcija){
         this.id = akcija.getId();
-        this.prodavac = akcija.getProdavac().getId();
+        this.prodavac = new ProdavacDTO(akcija.getProdavac());
         this.procenat = akcija.getProcenat();
         this.odKad = akcija.getOdKad();
         this.doKad = akcija.getDoKad();
         this.tekst = akcija.getTekst();
     }
-
-
-
-
 
 
 

@@ -1,7 +1,6 @@
-package com.ftn.Taverna.model.DTO.post;
+package com.ftn.Taverna.web.kontroleri.DTO.post;
 
 
-import com.ftn.Taverna.model.DTO.KupacDTO;
 import com.ftn.Taverna.model.Porudzbina;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -1,19 +1,14 @@
-package com.ftn.Taverna.kontroleri;
+package com.ftn.Taverna.web.kontroleri;
 
 
-import com.ftn.Taverna.model.Artikal;
-import com.ftn.Taverna.model.DTO.ArtikalDTO;
-import com.ftn.Taverna.model.DTO.PorudzbinaDTO;
-import com.ftn.Taverna.model.DTO.ProdavacDTO;
-import com.ftn.Taverna.model.DTO.post.PorudzbinaDTOPost;
+import com.ftn.Taverna.web.kontroleri.DTO.PorudzbinaDTO;
+import com.ftn.Taverna.web.kontroleri.DTO.post.PorudzbinaDTOPost;
 import com.ftn.Taverna.model.Kupac;
 import com.ftn.Taverna.model.Porudzbina;
-import com.ftn.Taverna.model.Prodavac;
 import com.ftn.Taverna.servisi.KupacServis;
 import com.ftn.Taverna.servisi.PorudzbinaServis;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

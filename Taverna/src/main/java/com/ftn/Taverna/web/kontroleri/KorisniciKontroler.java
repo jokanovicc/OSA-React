@@ -1,10 +1,10 @@
-package com.ftn.Taverna.kontroleri;
+package com.ftn.Taverna.web.kontroleri;
 
 
 import com.ftn.Taverna.model.*;
-import com.ftn.Taverna.model.DTO.*;
-import com.ftn.Taverna.model.DTO.post.KupacDTOPost;
-import com.ftn.Taverna.model.DTO.post.ProdavacDTOPost;
+import com.ftn.Taverna.web.kontroleri.DTO.*;
+import com.ftn.Taverna.web.kontroleri.DTO.post.KupacDTOPost;
+import com.ftn.Taverna.web.kontroleri.DTO.post.ProdavacDTOPost;
 import com.ftn.Taverna.servisi.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
