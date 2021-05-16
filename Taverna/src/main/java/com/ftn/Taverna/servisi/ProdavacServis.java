@@ -27,6 +27,10 @@ public class ProdavacServis {
 
     }
 
+    public Prodavac getProdavacByUsername(String username){
+        return prodavacRepository.getProdavacByKorisnik_Username(username);
+    }
+
     public void deleteProdavac(Prodavac prodavac){
         prodavacRepository.delete(prodavac);
     }

@@ -6,36 +6,23 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
-public class ArtikalDTOPost implements Serializable {
+public class ArtikalEditDTO implements Serializable {
 
-    @NotEmpty
-    private Integer id;
     @NotBlank
     private String naziv;
     @NotBlank
     private String opis;
     @NotBlank
     private Double cena;
-    @NotBlank
-    private String putanjaDoSlike;
 
-
-
-
-    public ArtikalDTOPost(Artikal artikal){
-        this.id = artikal.getId();
+    public ArtikalEditDTO(Artikal artikal){
         this.naziv = artikal.getNaziv();
         this.opis = artikal.getOpis();
         this.cena = artikal.getCena();
-        this.putanjaDoSlike = artikal.getPutanjaDoSlike();
-
     }
 
 

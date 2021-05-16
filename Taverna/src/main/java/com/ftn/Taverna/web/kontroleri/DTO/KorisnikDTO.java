@@ -15,10 +15,8 @@ public class KorisnikDTO {
     private String ime;
     @NotBlank
     private String prezime;
-    @NotBlank
-    private String korisnicko;
-    @NotBlank
-    private String sifra;
+    private String username;
+    private String password;
     @NotBlank
     private boolean blokiran;
 
@@ -26,8 +24,8 @@ public class KorisnikDTO {
         this.id = korisnik.getId();
         this.ime = korisnik.getIme();
         this.prezime = korisnik.getPrezime();
-        this.korisnicko = korisnik.getKorisnicko();
-        this.sifra = korisnik.getSifra();
+        this.username= korisnik.getUsername();
+        this.password = korisnik.getPassword();
         this.blokiran = korisnik.isBlokiran();
     }
 

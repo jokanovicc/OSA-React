@@ -22,11 +22,8 @@ public class ProdavacDTOPost {
     @NotBlank
     private String prezime;
 
-    @NotBlank
-    private String korisnicko;
-
-    @NotBlank
-    private String sifra;
+    private String username;
+    private String password;
 
     @NotBlank
     private boolean blokiran;
@@ -55,8 +52,8 @@ public class ProdavacDTOPost {
         this.setNaziv(prodavac.getNaziv());
         this.ime = prodavac.getKorisnik().getIme();
         this.prezime = prodavac.getKorisnik().getPrezime();
-        this.korisnicko = prodavac.getKorisnik().getKorisnicko();
-        this.sifra = prodavac.getKorisnik().getSifra();
+        this.username = prodavac.getKorisnik().getUsername();
+        this.password = prodavac.getKorisnik().getPassword();
         this.blokiran = prodavac.getKorisnik().isBlokiran();
 
     }

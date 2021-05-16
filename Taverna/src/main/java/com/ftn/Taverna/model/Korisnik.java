@@ -16,8 +16,8 @@ public class Korisnik {
     private Integer id;
     private String ime;
     private String prezime;
-    private String korisnicko;
-    private String sifra;
+    private String username;
+    private String password;
     private boolean blokiran;
 
     @Enumerated(EnumType.STRING)

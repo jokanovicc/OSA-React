@@ -10,12 +10,19 @@ import com.ftn.Taverna.model.Prodavac;
 import com.ftn.Taverna.servisi.AkcijaServis;
 import com.ftn.Taverna.servisi.ArtikliServis;
 import com.ftn.Taverna.servisi.ProdavacServis;
+import com.ftn.Taverna.web.kontroleri.DTO.post.ArtikalEditDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -35,6 +42,7 @@ public class ArtikliKontroler {
 
 
 
+
     //CRUD OPERACIJE ARTIKLA
     @GetMapping
     public ResponseEntity<Collection<ArtikalDTO>> findAllArtikli() {
@@ -47,6 +55,7 @@ public class ArtikliKontroler {
 
 
     }
+
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<ArtikalDTO> getArtikalById(@PathVariable("id") Integer id){
@@ -61,19 +70,21 @@ public class ArtikliKontroler {
 
     @PreAuthorize("hasAnyRole('ADMIN','PRODAVAC')")
     @PostMapping
-    public ResponseEntity<ArtikalDTO> snimiArtikal(@RequestBody ArtikalDTOPost artikalDTO){
+    public ResponseEntity<ArtikalDTO> snimiArtikal(@RequestBody ArtikalDTOPost artikalDTO, Authentication authentication){
+
+        UserDetails userPrincipal = (UserDetails) authentication.getPrincipal();
+        String username = userPrincipal.getUsername();
+        System.out.println("Ovo jeee" + username);
+        Prodavac prodavac = prodavacServis.getProdavacByUsername(username);
+
         Artikal artikal = new Artikal();
         artikal.setNaziv(artikalDTO.getNaziv());
         artikal.setCena(artikalDTO.getCena());
         artikal.setOpis(artikalDTO.getOpis());
-        artikal.setPutanjaDoSlike(artikal.getPutanjaDoSlike());
-        System.out.println("aaaaaaaa " + artikalDTO.getProdavac());
-        Prodavac prodavac = prodavacServis.findOne(artikalDTO.getProdavac());
-        if(prodavac==null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
-        }
+        artikal.setPutanjaDoSlike(artikalDTO.getPutanjaDoSlike());
         artikal.setProdavac(prodavac);
+
+
         artikal = artikliServis.saveArtikal(artikal);
         return new ResponseEntity<ArtikalDTO>(new ArtikalDTO(artikal), HttpStatus.CREATED);
 
@@ -81,29 +92,23 @@ public class ArtikliKontroler {
     }
 
     @PreAuthorize("hasAnyRole('ADMIN','PRODAVAC')")
-    @PutMapping
-    public ResponseEntity<ArtikalDTO> izmeniArtikal(@RequestBody ArtikalDTOPost artikalDTO){
-        Artikal artikal = artikliServis.findOne(artikalDTO.getId());
+    @PutMapping("/{id}")
+    public ResponseEntity<ArtikalDTO> izmeniArtikal(@PathVariable("id") Integer id,@RequestBody ArtikalEditDTO artikalDTO){
+        Artikal artikal = artikliServis.findOne(id);
         if(artikal == null){
             return new ResponseEntity<ArtikalDTO>(HttpStatus.BAD_REQUEST);
-
         }
         artikal.setNaziv(artikalDTO.getNaziv());
         artikal.setCena(artikalDTO.getCena());
         artikal.setOpis(artikalDTO.getOpis());
-        artikal.setPutanjaDoSlike(artikal.getPutanjaDoSlike());
-        System.out.println("aaaaaaaa " + artikalDTO.getProdavac());
-        Prodavac prodavac = prodavacServis.findOne(artikalDTO.getProdavac());
-        if(prodavac==null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
-        }
-        artikal.setProdavac(prodavac);
         artikliServis.saveArtikal(artikal);
         return new ResponseEntity<>(new ArtikalDTO(artikal), HttpStatus.CREATED);
 
 
     }
+
+
+
 
     @PreAuthorize("hasAnyRole('ADMIN','PRODAVAC')")
     @DeleteMapping(value = "/{id}")
@@ -138,6 +143,7 @@ public class ArtikliKontroler {
     }
 
 
+    //sluzi samo da izlista akcije
     //METODE ZA AKCIJU
     @GetMapping("/lista-akcija")
     public ResponseEntity<Collection<AkcijaDTO>> findAllAkcije(){

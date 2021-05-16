@@ -26,7 +26,7 @@ public class KorisnikServis {
 
 
     public Korisnik findByUsername(String username) {
-        Optional<Korisnik> user = korisnikRepository.findFirstByKorisnicko(username);
+        Optional<Korisnik> user = korisnikRepository.findFirstByUsername(username);
         if (!user.isEmpty()) {
             return user.get();
         }

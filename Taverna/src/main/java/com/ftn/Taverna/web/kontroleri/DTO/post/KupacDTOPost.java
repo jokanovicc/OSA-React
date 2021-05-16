@@ -19,10 +19,8 @@ public class KupacDTOPost {
     private String ime;
     @NotBlank
     private String prezime;
-    @NotBlank
-    private String korisnicko;
-    @NotBlank
-    private String sifra;
+    private String username;
+    private String password;
     @NotBlank
     private boolean blokiran;
 
@@ -32,8 +30,8 @@ public class KupacDTOPost {
         this.setAdresa(kupac.getAdresa());
         this.ime = kupac.getKorisnik().getIme();
         this.prezime = kupac.getKorisnik().getPrezime();
-        this.korisnicko = kupac.getKorisnik().getKorisnicko();
-        this.sifra = kupac.getKorisnik().getKorisnicko();
+        this.username = kupac.getKorisnik().getUsername();
+        this.password = kupac.getKorisnik().getPassword();
         this.blokiran = kupac.getKorisnik().isBlokiran();
 
     }

@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface KorisnikRepository extends JpaRepository<Korisnik, Integer> {
 
-    Optional<Korisnik> findFirstByKorisnicko(String username);
+    Optional<Korisnik> findFirstByUsername(String username);
 }

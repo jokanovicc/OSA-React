@@ -25,15 +25,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
 @RestController
 @RequestMapping("users")
+@CrossOrigin("*")
 public class LoginKontroler {
 
     @Autowired
@@ -79,11 +77,12 @@ public class LoginKontroler {
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody KorisnikDTO userDto) {
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(userDto.getKorisnicko(), userDto.getSifra());
+                new UsernamePasswordAuthenticationToken(userDto.getUsername(), userDto.getPassword());
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        System.out.println("sam ovde_ ");
         try {
-            UserDetails userDetails = userDetailsService.loadUserByUsername(userDto.getKorisnicko());
+            UserDetails userDetails = userDetailsService.loadUserByUsername(userDto.getUsername());
             return ResponseEntity.ok(tokenUtils.generateToken(userDetails));
         } catch (UsernameNotFoundException e) {
             return ResponseEntity.notFound().build();
@@ -94,7 +93,7 @@ public class LoginKontroler {
     @PostMapping(value ="/registracija-kupac", consumes = "application/json")
     public ResponseEntity<KupacDTO> snimiKupca(@RequestBody @Validated KupacDTOPost kupacDTO){
 
-        Optional<Korisnik> user = korisnikRepository.findFirstByKorisnicko(kupacDTO.getKorisnicko());
+        Optional<Korisnik> user = korisnikRepository.findFirstByUsername(kupacDTO.getUsername());
         if(user.isPresent()){
             return null;
         }
@@ -103,8 +102,8 @@ public class LoginKontroler {
         Kupac noviKupac = new Kupac();
 
 
-        noviKorisnik.setKorisnicko(kupacDTO.getKorisnicko());
-        noviKorisnik.setSifra(passwordEncoder.encode(kupacDTO.getSifra()));
+        noviKorisnik.setUsername(kupacDTO.getUsername());
+        noviKorisnik.setPassword(passwordEncoder.encode(kupacDTO.getPassword()));
         noviKorisnik.setIme(kupacDTO.getIme());
         noviKorisnik.setPrezime(kupacDTO.getPrezime());
         noviKorisnik.setBlokiran(false);
@@ -125,7 +124,7 @@ public class LoginKontroler {
     @PostMapping(value ="/registracija-prodavac", consumes = "application/json")
     public ResponseEntity<ProdavacDTOPost> snimiProdavca(@RequestBody @Validated ProdavacDTOPost prodavacDTO){
 
-        Optional<Korisnik> user = korisnikRepository.findFirstByKorisnicko(prodavacDTO.getKorisnicko());
+        Optional<Korisnik> user = korisnikRepository.findFirstByUsername(prodavacDTO.getUsername());
         if(user.isPresent()){
             return null;
         }
@@ -136,8 +135,8 @@ public class LoginKontroler {
         Prodavac noviProdavac = new Prodavac();
 
 
-        noviKorisnik.setKorisnicko(prodavacDTO.getKorisnicko());
-        noviKorisnik.setSifra(passwordEncoder.encode(prodavacDTO.getSifra()));
+        noviKorisnik.setUsername(prodavacDTO.getUsername());
+        noviKorisnik.setPassword(passwordEncoder.encode(prodavacDTO.getPassword()));
         noviKorisnik.setIme(prodavacDTO.getIme());
         noviKorisnik.setPrezime(prodavacDTO.getPrezime());
         noviKorisnik.setBlokiran(false);

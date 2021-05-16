@@ -6,11 +6,15 @@ import com.ftn.Taverna.web.kontroleri.DTO.*;
 import com.ftn.Taverna.web.kontroleri.DTO.post.KupacDTOPost;
 import com.ftn.Taverna.web.kontroleri.DTO.post.ProdavacDTOPost;
 import com.ftn.Taverna.servisi.*;
+import com.ftn.Taverna.web.kontroleri.DTO.post.ResetPasswordDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -33,6 +37,9 @@ public class KorisniciKontroler {
     private PorudzbinaServis porudzbinaServis;
     @Autowired
     private KorisnikServis korisnikServis;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
     //CRUD operacije za kupca
@@ -68,8 +75,8 @@ public class KorisniciKontroler {
         Kupac noviKupac = new Kupac();
 
 
-        noviKorisnik.setKorisnicko(kupacDTO.getKorisnicko());
-        noviKorisnik.setSifra(kupacDTO.getSifra());
+        noviKorisnik.setUsername(kupacDTO.getUsername());
+        noviKorisnik.setPassword(kupacDTO.getPassword());
         noviKorisnik.setIme(kupacDTO.getIme());
         noviKorisnik.setPrezime(kupacDTO.getPrezime());
         noviKorisnik.setBlokiran(false);
@@ -96,8 +103,8 @@ public class KorisniciKontroler {
             return new ResponseEntity<KupacDTOPost>(HttpStatus.BAD_REQUEST);
         }
 
-        kupac.getKorisnik().setKorisnicko(kupacDTO.getKorisnicko());
-        kupac.getKorisnik().setSifra(kupacDTO.getSifra());
+        kupac.getKorisnik().setUsername(kupacDTO.getUsername());
+        kupac.getKorisnik().setPassword(kupacDTO.getPassword());
         kupac.getKorisnik().setIme(kupacDTO.getIme());
         kupac.getKorisnik().setPrezime(kupacDTO.getPrezime());
         kupac.setAdresa(kupacDTO.getAdresa());
@@ -159,8 +166,8 @@ public class KorisniciKontroler {
         Prodavac noviProdavac = new Prodavac();
 
 
-        noviKorisnik.setKorisnicko(prodavacDTO.getKorisnicko());
-        noviKorisnik.setSifra(prodavacDTO.getSifra());
+        noviKorisnik.setUsername(prodavacDTO.getUsername());
+        noviKorisnik.setPassword(prodavacDTO.getPassword());
         noviKorisnik.setIme(prodavacDTO.getIme());
         noviKorisnik.setPrezime(prodavacDTO.getPrezime());
         noviKorisnik.setBlokiran(false);
@@ -192,8 +199,8 @@ public class KorisniciKontroler {
         prodavac.getKorisnik().setIme(prodavacDTO.getIme());
         prodavac.getKorisnik().setPrezime(prodavacDTO.getPrezime());
         prodavac.setAdresa(prodavacDTO.getAdresa());
-        prodavac.getKorisnik().setKorisnicko(prodavacDTO.getKorisnicko());
-        prodavac.getKorisnik().setSifra(prodavacDTO.getSifra());
+        prodavac.getKorisnik().setUsername(prodavacDTO.getUsername());
+        prodavac.getKorisnik().setPassword(prodavacDTO.getPassword());
 
         prodavac.setPoslujeOd(prodavacDTO.getPoslujeOd());
         prodavac.setImejl(prodavacDTO.getImejl());
@@ -230,6 +237,35 @@ public class KorisniciKontroler {
         }
         return new ResponseEntity<>(artikliDTO,HttpStatus.OK);
     }
+
+
+
+    @GetMapping(value = "my-info")
+    public ResponseEntity<KorisnikDTO> findMojeInformacije(Authentication authentication){
+        UserDetails userPrincipal = (UserDetails) authentication.getPrincipal();
+        String username = userPrincipal.getUsername();
+        System.out.println("Ovo jeee" + username);
+        Korisnik korisnik = korisnikServis.findByUsername(username);
+        return new ResponseEntity<>(new KorisnikDTO(korisnik), HttpStatus.OK);
+
+    }
+
+    @PutMapping(value ="/izmeni-korisnika",consumes = "application/json")
+    public ResponseEntity<KorisnikDTO> izmeniKorisnika(@RequestBody KorisnikDTO korisnikDTO,Authentication authentication){
+        UserDetails userPrincipal = (UserDetails) authentication.getPrincipal();
+        String username = userPrincipal.getUsername();
+        System.out.println("Ovo jeee" + username);
+        Korisnik korisnik = korisnikServis.findByUsername(username);
+        korisnik.setIme(korisnikDTO.getIme());
+        korisnik.setPrezime(korisnikDTO.getPrezime());
+        korisnik.setUsername(korisnikDTO.getUsername());
+        korisnik.setPassword(passwordEncoder.encode(korisnikDTO.getPassword()));
+        korisnikServis.save(korisnik);
+        return new ResponseEntity<KorisnikDTO>(new KorisnikDTO(korisnik), HttpStatus.CREATED);
+    }
+
+
+
 
 
     //Blokiraj korisnika
