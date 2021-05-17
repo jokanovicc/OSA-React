@@ -25,7 +25,7 @@ const SviProdavci=()=>{
 
     return(
 
-        <Container>
+        <Container className={"kontejner"}>
             <Row>
                 <Col md={{ span: 8, offset: 2 }} style={{ textAlign: "center" }}>
                     <h1>Prodavci</h1>

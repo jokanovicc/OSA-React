@@ -20,13 +20,38 @@
   border-radius: 10%;
 }
 
+body{
+  background-color: #044855;
+
+}
+
+
 .kontejner{
-  background-color: #edf1f3;
+  margin-top: 7%;
+  background-color: white;
+  padding: 35px;
 }
 .naslov{
-  margin-top: 15%;
+  margin-top: 13%;
   width: fit-content;
   border-radius: 10%;
+}
+
+.slikaProizvoda{
+  height: 250px;
+  width: 285px;
+}
+
+.navigacija{
+  background-color: #C0424E;
+  color: white;
+}
+.logo{
+  color: white !important;
+}
+
+.font{
+  color: white;
 }
 
 .kartice{

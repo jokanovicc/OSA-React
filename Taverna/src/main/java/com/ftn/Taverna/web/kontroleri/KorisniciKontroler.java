@@ -42,6 +42,22 @@ public class KorisniciKontroler {
     private PasswordEncoder passwordEncoder;
 
 
+
+    @GetMapping("/lista-korisnika")
+    public ResponseEntity<Collection<KorisnikDTO>> getListaKorisnika(){
+        List<KorisnikDTO> korisnikDTOS = new ArrayList<>();
+        List<Korisnik> korisnici = korisnikServis.findAll();
+        for(Korisnik k: korisnici){
+            if(k.getRoles()!=Roles.ADMIN && !k.isBlokiran()){
+                korisnikDTOS.add(new KorisnikDTO(k));
+            }
+        }
+        return new ResponseEntity<>(korisnikDTOS, HttpStatus.OK);
+    }
+
+
+
+
     //CRUD operacije za kupca
 
     @PreAuthorize("hasAnyRole('ADMIN','PRODAVAC')")
@@ -280,7 +296,6 @@ public class KorisniciKontroler {
 
         }else{
                 return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
-
         }
 
     }

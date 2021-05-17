@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Alert, Button, Form } from "react-bootstrap";
+import {Alert, Button, Container, Form} from "react-bootstrap";
 import { useParams } from "react-router";
 import {ArtikliService} from "../../services/ArtikliService";
 const EditArtikal = () => {
@@ -53,8 +53,10 @@ const EditArtikal = () => {
                     Artikal uspešno ažuriran!
                 </Alert>
             )}
-            <h1>Artikal</h1>
-            <Form>
+            <Container className={"kontejner"}>
+                <h1>Izmena artikla</h1>
+                <hr/>
+                <Form>
                 <Form.Group>
                     <Form.Label>Naziv</Form.Label>
                     <Form.Control
@@ -86,6 +88,7 @@ const EditArtikal = () => {
                     Edit
                 </Button>
             </Form>
+            </Container>
         </>
     );
 };

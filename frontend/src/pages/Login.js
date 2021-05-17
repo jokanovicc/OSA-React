@@ -39,12 +39,14 @@ const Login = () => {
     // JSX nije nužno koristi - ovo je samo deklarativan zapis funkcija koje će React izvesti
     // https://reactjs.org/docs/react-without-jsx.html
     return (
-        <Container>
+        <Container className={"kontejner"}>
             <Row>
                 <Col md={{ span: 6, offset: 3 }} style={{ textAlign: "center" }}>
+                    <h1>Ulogovanje</h1>
+                    <hr/>
                     <Form>
                         <Form.Group>
-                            <Form.Label>Username</Form.Label>
+                            <Form.Label>Korisničko ime</Form.Label>
                             <Form.Control
                                 type="text"
                                 name="username"
@@ -53,7 +55,7 @@ const Login = () => {
                             />
                         </Form.Group>
                         <Form.Group>
-                            <Form.Label>Password</Form.Label>
+                            <Form.Label>Šifra</Form.Label>
                             <Form.Control
                                 type="password"
                                 name="password"

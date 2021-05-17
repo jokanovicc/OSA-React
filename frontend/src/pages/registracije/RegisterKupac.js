@@ -32,9 +32,11 @@ const RegisterKupac = ()=>{
     return (
 
 
-        <Container>
+        <Container className={"kontejner"}>
             <Row>
                 <Col md={{ span: 6, offset: 3 }} style={{ textAlign: "center" }}>
+                    <h1>Registracija kupca</h1>
+                    <hr/>
                     <Form>
                         <Form.Group>
                             <Form.Label>Ime</Form.Label>

@@ -15,7 +15,9 @@ import EditArtikal from "./pages/artikli/EditArtikal";
 import {PrivateRoute} from "./components/PrivateRoute";
 import EditKorisnika from "./pages/korisnici/EditKorisnika";
 import ResetPassword from "./pages/korisnici/ResetPassword";
-
+import ProdavacArtikli from "./pages/artikli/ProdavacArtikli";
+import NeprispelePorudzbine from "./pages/kupac/NeprispelePorudzbine";
+import BlokiranjeKorisnika from "./pages/admini/BlokiranjeKorisnika";
 
 function App() {
   return (
@@ -40,7 +42,25 @@ function App() {
                       component={EditArtikal}
                       roles={["ROLE_PRODAVAC"]}
                   />
+                  <PrivateRoute
+                      exact
+                      path="/moji-artikli"
+                      component={ProdavacArtikli}
+                      roles={["ROLE_PRODAVAC"]}
+                  />
+                  <PrivateRoute
+                      exact
+                      path="/nedostavljene"
+                      component={NeprispelePorudzbine}
+                      roles={["ROLE_KUPAC"]}
+                  />
 
+                  <PrivateRoute
+                      exact
+                      path="/blokiranja"
+                      component={BlokiranjeKorisnika}
+                      roles={["ROLE_ADMIN"]}
+                  />
 
 
                   {/* Svaka putanja koja se ne može vodi do prikaza NotFound komponente */}

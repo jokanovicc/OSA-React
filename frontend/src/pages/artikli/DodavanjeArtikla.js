@@ -41,7 +41,7 @@ const DodavanjeArtikla = (props) => {
     return (
 
 
-        <Container>
+        <Container  className={"kontejner"}>
             <Row>
                 <Col md={{ span: 6, offset: 3 }} style={{ textAlign: "center" }}>
                     <Form>
@@ -85,7 +85,7 @@ const DodavanjeArtikla = (props) => {
                         <Button variant="success" onClick={dodavanje}>
                             Dodaj
                         </Button>
-                        <Button size={"sm"} variant={"info"} onClick={resetKorisnik}>
+                        <Button style={{"margin-left":"50px"}}  variant={"info"} onClick={resetKorisnik}>
                             Ресетуј
                         </Button>
                     </Form>

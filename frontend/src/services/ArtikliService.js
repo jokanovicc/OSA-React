@@ -8,10 +8,15 @@ export const ArtikliService = {
     editArtikal,
     deleteArtikal,
     getArtikliByProdavac,
+    getArtikliProdavca
 }
 
 async function getProdavci() {
     return await TavernaAxiosClient.get("http://localhost:8080/korisnici/lista-prodavaca");
+}
+
+async function getArtikliProdavca() {
+    return await TavernaAxiosClient.get("http://localhost:8080/artikli/artikli-prodavac");
 }
 
 
@@ -28,7 +33,8 @@ async function getArtikal(id){
 }
 
 async function addArtikal(artikal){
-    return await TavernaAxiosClient.post("http://localhost:8080/artikli",artikal);
+    await TavernaAxiosClient.post("http://localhost:8080/artikli",artikal);
+    return window.location.assign("/moji-artikli");
 }
 
 async function editArtikal(id, artikal){

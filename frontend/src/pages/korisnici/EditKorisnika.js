@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {useParams} from "react-router";
 import {ArtikliService} from "../../services/ArtikliService";
 import {RegistracijaService} from "../../services/RegistracijaService";
-import {Alert, Button, Form} from "react-bootstrap";
+import {Alert, Button, Form,Container,Row, Col} from "react-bootstrap";
 import {Link} from "react-router-dom";
 
 
@@ -61,10 +61,12 @@ const EditKorisnika=()=>{
                     Vas nalog uspešno ažuriran!
                 </Alert>
             )}
+
+            <Container  className={"kontejner"}>
+                <Row>
+                    <Col md={{ span: 8, offset: 2 }} style={{ textAlign: "center" }}>
+
             <h1>Vase informacije</h1>
-            <Button as={Link} to="/reset-sifra">
-                Resetujte sifru
-            </Button>
             <Form>
                 <Form.Group>
                     <Form.Label>Ime</Form.Label>
@@ -100,9 +102,18 @@ const EditKorisnika=()=>{
 
 
                 <Button variant="primary" onClick={() => editKorisnik()}>
-                    Edit
+                    Izmenite
                 </Button>
+                <hr/>
+                <Button as={Link} to="/reset-sifra">
+                    Resetujte sifru
+                </Button>
+
             </Form>
+                    </Col>
+                </Row>
+            </Container>
+
         </>
     );
 

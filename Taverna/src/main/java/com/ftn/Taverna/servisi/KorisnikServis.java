@@ -5,6 +5,7 @@ import com.ftn.Taverna.model.Korisnik;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,6 +18,10 @@ public class KorisnikServis {
 
     public Korisnik save(Korisnik novKorisnik){
         return korisnikRepository.save(novKorisnik);
+    }
+
+    public List<Korisnik> findAll(){
+        return korisnikRepository.findAll();
     }
 
     public Korisnik findOne(Integer id){

@@ -20,7 +20,7 @@ const Home = () => {
                     <h4>//dostava hrane//</h4>
 
                     {TokenService.getToken() && role === "ROLE_PRODAVAC" ? (
-                        <Button onClick={() => AuthenticationService.logout()}>Dodaj artikal</Button>
+                        <Button as={Link} to="/dodavanje-artikla">Dodaj artikal</Button>
                     ) : (
                         <Button as={Link} to="/registracija-prodavac">
                             Vi ste prodavac? Registrujte se

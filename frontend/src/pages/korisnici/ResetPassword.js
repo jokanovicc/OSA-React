@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useParams} from "react-router";
 import {RegistracijaService} from "../../services/RegistracijaService";
-import {Alert, Button, Form} from "react-bootstrap";
+import {Alert, Button, Form,Container} from "react-bootstrap";
 
 const ResetPassword=()=>{
     const [korisnik, setKorisnik] = useState({
@@ -70,6 +70,7 @@ const ResetPassword=()=>{
                     Sifra uspešno ažurirana!
                 </Alert>
             )}
+            <Container  className={"kontejner"}>
             <h1>Vase informacije</h1>
             <Form>
 
@@ -102,6 +103,8 @@ const ResetPassword=()=>{
                     Edit
                 </Button>
             </Form>
+            </Container>
+
         </>
     );
 

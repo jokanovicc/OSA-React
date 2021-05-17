@@ -8,7 +8,9 @@ export const RegistracijaService={
     getMyInfo,
     editKorisnik,
     resetSifra,
-    getSifra
+    getSifra,
+    blokirajKorisnika,
+    getSvi,
 
 };
 
@@ -23,6 +25,15 @@ function isKupacValid(kupac) {
     );
 }
 
+async function getSvi(){
+    return TavernaAxiosClient.get("http://localhost:8080/korisnici/lista-korisnika");
+}
+
+
+async function blokirajKorisnika(id){
+    return TavernaAxiosClient.put(`http://localhost:8080/korisnici/blokiranje/${id}`);
+
+}
 
 
 async function RegistracijaKupac(kupac) {
