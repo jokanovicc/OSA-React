@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Positive;
 import java.io.Serializable;
 
 @Data
@@ -24,6 +25,5 @@ public class ArtikalEditDTO implements Serializable {
         this.opis = artikal.getOpis();
         this.cena = artikal.getCena();
     }
-
 
 }

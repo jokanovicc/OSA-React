@@ -2,9 +2,11 @@ package com.ftn.Taverna.web.kontroleri;
 
 
 import com.ftn.Taverna.model.Prodavac;
+import com.ftn.Taverna.model.Stavka;
 import com.ftn.Taverna.servisi.ProdavacServis;
 import com.ftn.Taverna.web.kontroleri.DTO.NedostavljenePorudzbine;
 import com.ftn.Taverna.web.kontroleri.DTO.PorudzbinaDTO;
+import com.ftn.Taverna.web.kontroleri.DTO.post.AnonimniKomentarDTO;
 import com.ftn.Taverna.web.kontroleri.DTO.post.PorudzbinaDTOPost;
 import com.ftn.Taverna.model.Kupac;
 import com.ftn.Taverna.model.Porudzbina;
@@ -136,13 +138,38 @@ public class PorudzbineKontroler {
 //
 //    }
 
+
+    @GetMapping("/dostavljene-nekomentarisane")
+    public ResponseEntity<Collection<PorudzbinaDTO>> getPorudzbineNekomentarisane(Authentication authentication){
+        UserDetails userPrincipal = (UserDetails) authentication.getPrincipal();
+        String username = userPrincipal.getUsername();
+        System.out.println("Ovo jeee" + username);
+        Kupac kupac = kupacServis.kupacByUsername(username);
+
+
+        List<Porudzbina> porudzbine = porudzbinaServis.findAll();
+        List<PorudzbinaDTO> porudzbinaDTOS = new ArrayList<>();
+        for(Porudzbina p: porudzbine){
+            if(p.getKomentar()==null && p.getKupac().equals(kupac)){
+                porudzbinaDTOS.add(new PorudzbinaDTO(p));
+            }
+        }
+
+        return new ResponseEntity<>(porudzbinaDTOS, HttpStatus.OK);
+
+    }
+
+
+
+
     @PreAuthorize("hasAnyRole('ADMIN','KUPAC')")
-    @PutMapping("dodaj-komentar")
-    public ResponseEntity<Void> dodajKomentar(@RequestBody PorudzbinaDTOPost porudzbinaDTOPost){
-        Porudzbina porudzbina = porudzbinaServis.findOne(porudzbinaDTOPost.getId());
+    @PutMapping("/dodaj-komentar")
+    public ResponseEntity<Void> dodajKomentar(@RequestBody AnonimniKomentarDTO anonimanKomentar){
+        Porudzbina porudzbina = porudzbinaServis.findOne(anonimanKomentar.getId());
         if(porudzbina.isDostavljeno()){
-            porudzbina.setKomentar(porudzbinaDTOPost.getKomentar());
-            porudzbina.setOcena(porudzbinaDTOPost.getOcena());
+            porudzbina.setKomentar(anonimanKomentar.getKomentar());
+            porudzbina.setOcena(anonimanKomentar.getOcena());
+            porudzbina.setAnonimanKomentar(anonimanKomentar.isAnonimanKomentar());
             porudzbina = porudzbinaServis.save(porudzbina);
             return new ResponseEntity<Void>(HttpStatus.OK);
         }else{
@@ -151,6 +178,8 @@ public class PorudzbineKontroler {
         }
 
     }
+
+
     @PreAuthorize("hasAnyRole('ADMIN','PRODAVAC')")
     @PutMapping("{id}/arhiviraj-komentar")
     public ResponseEntity<Void> dodajKomentar(@PathVariable("id") Integer id) {

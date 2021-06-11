@@ -42,11 +42,11 @@ const Login = () => {
         <Container className={"kontejner"}>
             <Row>
                 <Col md={{ span: 6, offset: 3 }} style={{ textAlign: "center" }}>
-                    <h1>Ulogovanje</h1>
+                    <h1>Пријава на систем</h1>
                     <hr/>
                     <Form>
                         <Form.Group>
-                            <Form.Label>Korisničko ime</Form.Label>
+                            <Form.Label>Корисничко име</Form.Label>
                             <Form.Control
                                 type="text"
                                 name="username"
@@ -55,7 +55,7 @@ const Login = () => {
                             />
                         </Form.Group>
                         <Form.Group>
-                            <Form.Label>Šifra</Form.Label>
+                            <Form.Label>Шифра</Form.Label>
                             <Form.Control
                                 type="password"
                                 name="password"
@@ -64,7 +64,7 @@ const Login = () => {
                             />
                         </Form.Group>
                         <Button variant="success" onClick={login}>
-                            Log in
+                            Пријави се
                         </Button>
                     </Form>
                 </Col>

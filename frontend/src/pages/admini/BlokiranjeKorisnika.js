@@ -45,16 +45,16 @@ const BlokiranjeKorisnika=()=>{
         <Container className={"kontejner"}>
             <Row>
                 <Col md={{ span: 8, offset: 2 }} style={{ textAlign: "center" }}>
-                    <h1>Blokiranje korisnika</h1>
+                    <h1>Блокирање корисника</h1>
                     <hr/>
 
                     <Table bordered striped style={{ marginTop: 5 }}>
                         <thead className="thead-dark">
                         <tr>
-                            <th>Korisničko ime</th>
-                            <th>Ime</th>
-                            <th>Prezime</th>
-                            <th colSpan={2}>Blokiraj</th>
+                            <th>Корисничко име</th>
+                            <th>Име</th>
+                            <th>Презиме</th>
+                            <th colSpan={2}>Блокирај</th>
                         </tr>
                         </thead>
                         <tbody>

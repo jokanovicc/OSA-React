@@ -3,6 +3,7 @@ import {RegistracijaService} from "../../services/RegistracijaService";
 import {ArtikliService} from "../../services/ArtikliService";
 import {AuthenticationService} from "../../services/AuthenticationService";
 import {Button, Col, Container, Form, Row} from "react-bootstrap";
+import Swal from "sweetalert2";
 
 const DodavanjeArtikla = (props) => {
 
@@ -25,8 +26,17 @@ const DodavanjeArtikla = (props) => {
 
 
     const dodavanje = async () => {
-        await ArtikliService.addArtikal(artikal);
-        resetKorisnik();
+        if(artikal.naziv !== '' && artikal.cena !== ''&& artikal.opis!==''&& artikal.putanjaDoSlike!==''){
+
+            await ArtikliService.addArtikal(artikal);
+            resetKorisnik();
+        }else{
+            Swal.fire({
+                icon: 'error',
+                title: 'Уппсс...',
+                text: 'Не можете послати празно поље!',
+            })
+        }
     }
 
     const resetKorisnik=()=>{
@@ -44,9 +54,11 @@ const DodavanjeArtikla = (props) => {
         <Container  className={"kontejner"}>
             <Row>
                 <Col md={{ span: 6, offset: 3 }} style={{ textAlign: "center" }}>
+                    <h1>Додавање новог артикла</h1>
+                    <hr/>
                     <Form>
                         <Form.Group>
-                            <Form.Label>Naziv</Form.Label>
+                            <Form.Label>Назив</Form.Label>
                             <Form.Control
                                 type="text"
                                 name="naziv"
@@ -55,7 +67,7 @@ const DodavanjeArtikla = (props) => {
                             />
                         </Form.Group>
                         <Form.Group>
-                            <Form.Label>Opis</Form.Label>
+                            <Form.Label>Опис</Form.Label>
                             <Form.Control
                                 required
                                 type="text"
@@ -65,7 +77,7 @@ const DodavanjeArtikla = (props) => {
                             />
                         </Form.Group>
                         <Form.Group>
-                            <Form.Label>Putanja do Slike</Form.Label>
+                            <Form.Label>Путања до слике</Form.Label>
                             <Form.Control
                                 type="text"
                                 name="putanjaDoSlike"
@@ -74,7 +86,7 @@ const DodavanjeArtikla = (props) => {
                             />
                         </Form.Group>
                         <Form.Group>
-                            <Form.Label>Cena</Form.Label>
+                            <Form.Label>Цена</Form.Label>
                             <Form.Control
                                 type="number"
                                 name="cena"
@@ -83,7 +95,7 @@ const DodavanjeArtikla = (props) => {
                             />
                         </Form.Group>
                         <Button variant="success" onClick={dodavanje}>
-                            Dodaj
+                            Додај
                         </Button>
                         <Button style={{"margin-left":"50px"}}  variant={"info"} onClick={resetKorisnik}>
                             Ресетуј

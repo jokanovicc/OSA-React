@@ -6,7 +6,7 @@ const NotFound=() => (
     <Container>
         <Row>
             <Col md={{ span: 6, offset: 3 }} style={{ textAlign: "center" }}>
-                <h1>404 - Stranica nije nađena!</h1>
+                <h1>404 - Страница није нађена!</h1>
             </Col>
         </Row>
     </Container>

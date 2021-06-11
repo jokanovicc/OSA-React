@@ -18,6 +18,7 @@ import ResetPassword from "./pages/korisnici/ResetPassword";
 import ProdavacArtikli from "./pages/artikli/ProdavacArtikli";
 import NeprispelePorudzbine from "./pages/kupac/NeprispelePorudzbine";
 import BlokiranjeKorisnika from "./pages/admini/BlokiranjeKorisnika";
+import Artikal from "./pages/artikli/Artikal";
 
 function App() {
   return (
@@ -30,11 +31,24 @@ function App() {
                   <Route exact path="/login" component={Login} />
                   <Route exact path="/registracija-kupac" component={RegisterKupac}/>
                   <Route exact path="/registracija-prodavac" component={RegistracijaProdavac}/>
-                  <Route exact path="/artikli/:id" component={ArtikliSvi}/>
-                  <Route exact path="/dodavanje-artikla" component={DodavanjeArtikla}/>
-                  <Route exact path="/prodavci" component={SviProdavci}/>
-                  <Route exact path="/edit-info" component={EditKorisnika}/>
-                  <Route exact path="/reset-sifra" component={ResetPassword}/>
+
+
+                  <PrivateRoute exact path="/artikli/:id" component={ArtikliSvi} roles={["ROLE_KUPAC"]}/>
+
+                  <PrivateRoute exact path="/dodavanje-artikla" component={DodavanjeArtikla} roles={["ROLE_PRODAVAC"]}/>
+                  <PrivateRoute
+                      exact
+                      path="/prodavci"
+                      component={SviProdavci}
+                      roles={["ROLE_KUPAC"]}
+
+                  />
+                  <PrivateRoute
+                      exact path="/edit-info" component={EditKorisnika}
+                      roles={["ROLE_PRODAVAC","ROLE_KUPAC","ROLE_ADMINISTRATOR"]}
+
+                  />
+                  <PrivateRoute exact path="/reset-sifra" component={ResetPassword} roles={["ROLE_PRODAVAC","ROLE_KUPAC","ROLE_ADMINISTRATOR"]}/>
 
                   <PrivateRoute
                       exact
@@ -42,6 +56,15 @@ function App() {
                       component={EditArtikal}
                       roles={["ROLE_PRODAVAC"]}
                   />
+
+                  <PrivateRoute
+                      exact
+                      path="/artikal/:id"
+                      component={Artikal}
+                      roles={["ROLE_PRODAVAC","ROLE_KUPAC"]}
+                  />
+
+
                   <PrivateRoute
                       exact
                       path="/moji-artikli"

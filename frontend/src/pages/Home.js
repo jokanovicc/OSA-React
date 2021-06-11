@@ -15,23 +15,22 @@ const Home = () => {
 
     <Container className={"kontejner"}>
             <Row>
-                <Col md={5} className={"naslov"} style={{ textAlign: "center" }}>
+                <Col md={4} className={"naslov"} style={{ textAlign: "center" }}>
                     <h1>Т А В Е Р Н А</h1>
-                    <h4>//dostava hrane//</h4>
+                    <h4>//достава хране//</h4>
 
-                    {TokenService.getToken() && role === "ROLE_PRODAVAC" ? (
-                        <Button as={Link} to="/dodavanje-artikla">Dodaj artikal</Button>
+                    {TokenService.getToken() ? (
+                        console.log("Nije")
                     ) : (
-                        <Button as={Link} to="/registracija-prodavac">
-                            Vi ste prodavac? Registrujte se
+                        <Button className={"font"} as={Link} to="/registracija-prodavac">
+                            Региструј се као продавац
                         </Button>
-
 
                     )}
 
 
                 </Col>
-                <Col md={7}>
+                <Col md={8}>
                     <Image src={slika} className={"slika"} />
                 </Col>
             </Row>

@@ -19,7 +19,7 @@ const NavBar = () => {
             {
                 AuthenticationService.getRole()=== "ROLE_KUPAC" ? (
                     <Nav.Link className={"font"} as={Link} to="/prodavci">
-                        Prodavci
+                        Продавци
                     </Nav.Link>
                 ):(
                     console.log("ima")
@@ -32,7 +32,7 @@ const NavBar = () => {
             {
                 AuthenticationService.getRole()=== "ROLE_KUPAC" ? (
                     <Nav.Link className={"font"} as={Link} to="/nedostavljene">
-                        Nepristigle porudžbine
+                        Непристигле поруџбине
                     </Nav.Link>
                 ):(
                     console.log("ima")
@@ -45,7 +45,7 @@ const NavBar = () => {
             {
                 AuthenticationService.getRole()=== "ROLE_ADMIN" ? (
                     <Nav.Link className={"font"} as={Link} to="/blokiranja">
-                        Upravljanje Korisnicima
+                        Управљење корисницима
                     </Nav.Link>
                 ):(
                     console.log("ima")
@@ -60,7 +60,7 @@ const NavBar = () => {
             {
                 AuthenticationService.getRole()=== "ROLE_PRODAVAC" ? (
                     <Nav.Link className={"font"} as={Link} to="/moji-artikli">
-                        Moji Artikli
+                        Моји артикли
                     </Nav.Link>
                 ):(
                     console.log("ima")
@@ -74,7 +74,7 @@ const NavBar = () => {
 
             {TokenService.getToken() ? (
                 <Nav.Link className={"font"} as={Link} to="/edit-info">
-                    Moje informacije
+                    Моје информације
                 </Nav.Link>
             ) : (
                 console.log("nema")
@@ -86,7 +86,7 @@ const NavBar = () => {
                 console.log("Nije")
             ) : (
                 <Nav.Link className={"font"} as={Link} to="/registracija-kupac">
-                    Registruj se kao kupac
+                    Региструј се као купац
                 </Nav.Link>
 
             )}
@@ -96,7 +96,7 @@ const NavBar = () => {
 
             ) : (
                 <Nav.Link className={"font"} as={Link} to="/login">
-                    Uloguj se
+                    Улогуј се
                 </Nav.Link>
             )}
         </Navbar>

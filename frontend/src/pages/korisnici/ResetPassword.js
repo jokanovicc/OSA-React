@@ -47,7 +47,7 @@ const ResetPassword=()=>{
             var bcrypt = require('bcryptjs');
             var sifraCompare =bcrypt.compareSync(sifre.staraSifra,korisnik.password);
             if(sifraCompare===false){
-                alert("Nije ti bato ista sifra to")
+                alert("Није то иста шифра")
             }else {
                 korisnik.password=sifre.novaSifra;
                 await RegistracijaService.editKorisnik(korisnik)
@@ -67,15 +67,14 @@ const ResetPassword=()=>{
                     onClose={() => setShowSuccessAlert(false)}
                     dismissible
                 >
-                    Sifra uspešno ažurirana!
+                    Шифра успешно ажурирана
                 </Alert>
             )}
             <Container  className={"kontejner"}>
-            <h1>Vase informacije</h1>
             <Form>
 
                 <Form.Group>
-                    <Form.Label>Stara sifra</Form.Label>
+                    <Form.Label>Стара шифра</Form.Label>
                     <Form.Control
                         onChange={handleFormInputChange("staraSifra")}
                         name="staraSifra"
@@ -88,7 +87,7 @@ const ResetPassword=()=>{
 
 
                 <Form.Group>
-                    <Form.Label>Nova Sifra</Form.Label>
+                    <Form.Label>Нова шифра</Form.Label>
                     <Form.Control
                         onChange={handleFormInputChange("novaSifra")}
                         name="novaSifra"
@@ -100,7 +99,7 @@ const ResetPassword=()=>{
 
 
                 <Button variant="primary" onClick={() => resetSifra()}>
-                    Edit
+                    Измени
                 </Button>
             </Form>
             </Container>

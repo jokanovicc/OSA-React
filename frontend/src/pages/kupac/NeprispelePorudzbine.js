@@ -45,20 +45,20 @@ const NeprispelePorudzbine=()=>{
         <Container className={"kontejner"}>
             <Row>
                 <Col md={{ span: 8, offset: 2 }} style={{ textAlign: "center" }}>
-                    <h1>Nesustigle porudžbine</h1>
+                    <h1>Несустигле поруџбине</h1>
                     <hr/>
 
                     <Table bordered striped style={{ marginTop: 5 }}>
                         <thead className="thead-dark">
                         <tr>
-                            <th>Poružbina od dana</th>
-                            <th colSpan={2}>Obavesti da je sustiglo</th>
+                            <th>Поруџбина од дана</th>
+                            <th colSpan={2}>Обавести да је сустигло</th>
                         </tr>
                         </thead>
                         <tbody>
                         {porudzbine.length===0 ?
                             <tr align="center">
-                                <td colSpan="6">{porudzbine.length}Нема више шефе.</td>
+                                <td colSpan="6">{porudzbine.length}Нема више.</td>
                             </tr> :
                         porudzbine.map((porudzbina) => {
                             return (
@@ -69,7 +69,7 @@ const NeprispelePorudzbine=()=>{
                                             variant="info"
                                             onClick={() => stiglaPorudzbina(porudzbina.id)}
                                         >
-                                            Stiglo je!
+                                            Стигло је!
                                         </Button>
                                     </td>
                                 </tr>
@@ -78,7 +78,7 @@ const NeprispelePorudzbine=()=>{
                         </tbody>
                     </Table>
                     <hr/>
-                    <h3>Želiš ostaviti komentar na već pristiglu pošilju?</h3>
+                    <h3>Желиш оставити коментар на већ стиглу?</h3>
                     <h4><a href={"#"}>Ostavi komentar!</a></h4>
 
                 </Col>

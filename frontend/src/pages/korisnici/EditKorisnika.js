@@ -58,7 +58,7 @@ const EditKorisnika=()=>{
                     onClose={() => setShowSuccessAlert(false)}
                     dismissible
                 >
-                    Vas nalog uspešno ažuriran!
+                    Ваш налог успешно ажуриран
                 </Alert>
             )}
 
@@ -66,10 +66,10 @@ const EditKorisnika=()=>{
                 <Row>
                     <Col md={{ span: 8, offset: 2 }} style={{ textAlign: "center" }}>
 
-            <h1>Vase informacije</h1>
+            <h1>Ваше информације</h1>
             <Form>
                 <Form.Group>
-                    <Form.Label>Ime</Form.Label>
+                    <Form.Label>Име</Form.Label>
                     <Form.Control
                         onChange={handleFormInputChange("ime")}
                         name="ime"
@@ -78,7 +78,7 @@ const EditKorisnika=()=>{
                     />
                 </Form.Group>
                 <Form.Group>
-                    <Form.Label>Prezime</Form.Label>
+                    <Form.Label>Презиме</Form.Label>
                     <Form.Control
                         onChange={handleFormInputChange("prezime")}
                         name="prezime"
@@ -87,7 +87,7 @@ const EditKorisnika=()=>{
                     />
                 </Form.Group>
                 <Form.Group>
-                    <Form.Label>Username</Form.Label>
+                    <Form.Label>Корисничко</Form.Label>
                     <Form.Control
                         onChange={handleFormInputChange("username")}
                         name="username"

@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {Button, Col, Container, Form, Row} from "react-bootstrap";
 import {RegistracijaService} from "../../services/RegistracijaService";
 import DatePicker from "react-datepicker";
+import Swal from "sweetalert2";
 
 
 const RegistracijaProdavac = ()=>{
@@ -28,7 +29,19 @@ const RegistracijaProdavac = ()=>{
     }
 
     const register = async () => {
-        await RegistracijaService.RegistracijaProdavac(prodavac);
+        if(prodavac.ime !=='' && prodavac.password !== '' && prodavac.prezime !== '' && prodavac.adresa !=='' && prodavac.username!==''&&prodavac.naziv!==''&&prodavac.imejl!==''&&prodavac.poslujeOd!=='') {
+            await RegistracijaService.RegistracijaProdavac(prodavac);
+        }else{
+            await Swal.fire({
+                icon: 'error',
+                title: 'Уппсс...',
+                text: 'Не можете послати празно поље!',
+            })
+        }
+
+
+
+
 
     }
 
@@ -39,11 +52,11 @@ const RegistracijaProdavac = ()=>{
         <Container className={"kontejner"}>
             <Row>
                 <Col md={{ span: 6, offset: 3 }} style={{ textAlign: "center" }}>
-                    <h1>Registracija prodavca</h1>
+                    <h1>Регистрација Продавца</h1>
                     <hr/>
                     <Form>
                         <Form.Group>
-                            <Form.Label>Ime</Form.Label>
+                            <Form.Label>Име</Form.Label>
                             <Form.Control
                                 type="text"
                                 name="ime"
@@ -52,7 +65,7 @@ const RegistracijaProdavac = ()=>{
                             />
                         </Form.Group>
                         <Form.Group>
-                            <Form.Label>Prezime</Form.Label>
+                            <Form.Label>Презиме</Form.Label>
                             <Form.Control
                                 type="text"
                                 name="prezime"
@@ -61,7 +74,7 @@ const RegistracijaProdavac = ()=>{
                             />
                         </Form.Group>
                         <Form.Group>
-                            <Form.Label>Adresa</Form.Label>
+                            <Form.Label>Адреса</Form.Label>
                             <Form.Control
                                 required
                                 type="text"
@@ -71,7 +84,7 @@ const RegistracijaProdavac = ()=>{
                             />
                         </Form.Group>
                         <Form.Group>
-                            <Form.Label>Username</Form.Label>
+                            <Form.Label>Корисничко име</Form.Label>
                             <Form.Control
                                 type="text"
                                 name="username"
@@ -80,7 +93,7 @@ const RegistracijaProdavac = ()=>{
                             />
                         </Form.Group>
                         <Form.Group>
-                            <Form.Label>Password</Form.Label>
+                            <Form.Label>Лозинка</Form.Label>
                             <Form.Control
                                 type="password"
                                 name="password"
@@ -89,7 +102,7 @@ const RegistracijaProdavac = ()=>{
                             />
                         </Form.Group>
                         <Form.Group>
-                            <Form.Label>Imejl</Form.Label>
+                            <Form.Label>Имејл</Form.Label>
                             <Form.Control
                                 type="email"
                                 name="imejl"
@@ -98,7 +111,7 @@ const RegistracijaProdavac = ()=>{
                             />
                         </Form.Group>
                         <Form.Group>
-                            <Form.Label>Naziv</Form.Label>
+                            <Form.Label>Назив</Form.Label>
                             <Form.Control
                                 type="text"
                                 name="naziv"
@@ -107,7 +120,7 @@ const RegistracijaProdavac = ()=>{
                             />
                         </Form.Group>
                         <Form.Group>
-                            <Form.Label>Posluje od</Form.Label>
+                            <Form.Label>Послује од</Form.Label>
                             <Form.Control
                                 type="date"
                                 name="poslujeOd"
@@ -118,7 +131,7 @@ const RegistracijaProdavac = ()=>{
                             />
                         </Form.Group>
                         <Button variant="success" onClick={register}>
-                            Register
+                            Регистрација
                         </Button>
                     </Form>
                 </Col>

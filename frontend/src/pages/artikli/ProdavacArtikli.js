@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {useHistory} from "react-router";
+import {useHistory, useParams} from "react-router";
 import {ArtikliService} from "../../services/ArtikliService";
 import {Container,Card,Button,Row, Col,CardDeck} from "react-bootstrap";
 import {AuthenticationService} from "../../services/AuthenticationService";
@@ -9,9 +9,11 @@ const ProdavacArtikli=(props)=>{
     const[artikli, setArtikli] = useState([]);
 
 
+    const {id} = useParams();
+
     useEffect(()=> {
         fetchArtikli();
-    })
+    },[id])
 
 
     async function fetchArtikli(){
@@ -43,22 +45,21 @@ const ProdavacArtikli=(props)=>{
             <Card className={"kartice"} style={{ width: "18rem" }} key={id} >
                 <Card.Img className="slikaProizvoda" variant="top" src={artikal.putanjaDoSlike} />
                 <Card.Body>
-                    <Card.Title>{artikal.naziv}</Card.Title>
-                    <Card.Text>{artikal.cena} RSD</Card.Text>
-                    <Card.Text>{artikal.opis} RSD</Card.Text>
+                    <Card.Title><a href={/artikal/+ artikal.id}>{artikal.naziv}</a></Card.Title>
+                    <Card.Text>{artikal.cena} РСД</Card.Text>
                     {AuthenticationService.getRole() === "ROLE_PRODAVAC" && (
                         <>
                             <Button
                                 variant="info"                                block
                                 as={Link} to={"/edit-artikla/"+artikal.id}
                             >
-                                Edit
+                                Измени
                             </Button>
                             <Button
                                 variant="info"                                block
                                 onClick={() => deleteArtikal(artikal.id)}
                             >
-                                Delete
+                                Обриши
                             </Button>
                         </>
                     )}

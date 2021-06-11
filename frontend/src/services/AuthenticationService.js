@@ -1,5 +1,6 @@
 import TavernaAxiosClient from "./clients/TavernaAxiosClient";
 import { TokenService } from "./TokenService";
+import Swal from "sweetalert2";
 
 export const AuthenticationService = {
     login,
@@ -22,6 +23,11 @@ async function login(userCredentials) {
             console.error("Invalid token");
         }
     } catch (error) {
+        await Swal.fire({
+            icon: 'error',
+            title: 'Уупс...',
+            text: 'Погрешно име или лозинка!',
+        })
         console.error(error);
     }
 }

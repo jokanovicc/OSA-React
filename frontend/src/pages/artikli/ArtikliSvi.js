@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {useHistory} from "react-router";
+import {useHistory, useParams} from "react-router";
 import {ArtikliService} from "../../services/ArtikliService";
 import {Container,Card,Button,Row, Col,CardDeck} from "react-bootstrap";
 import {AuthenticationService} from "../../services/AuthenticationService";
@@ -9,10 +9,11 @@ import Swal from "sweetalert2";
 const ArtikliSvi=(props)=>{
     const[artikli, setArtikli] = useState([]);
 
+    const {id} = useParams();
 
     useEffect(()=> {
         fetchArtikli();
-    })
+    },[id])
 
 
     async function fetchArtikli(){
@@ -43,13 +44,12 @@ const ArtikliSvi=(props)=>{
 
     const renderCard = (artikal, id) => {
         return (
-            <Card className={"kartice"} style={{ width: "18rem" }} key={id} >
+            <Card className={"kartice"} style={{ width: "18rem", textAlign:"center" }} key={id} >
                 <Card.Img className="slikaProizvoda" variant="top" src={artikal.putanjaDoSlike} />
                 <Card.Body>
-                    <Card.Title>{artikal.naziv}</Card.Title>
-                    <Card.Text>{artikal.cena} RSD</Card.Text>
-                    <Card.Text>{artikal.opis} RSD</Card.Text>
-                    <Button onClick={() => korpu()}>Kupi</Button>
+                    <Card.Title><h5><a href={/artikal/+ artikal.id}>{artikal.naziv}</a></h5></Card.Title>
+                    <Card.Text><h5>{artikal.cena}РСД</h5></Card.Text>
+                    <Button onClick={() => korpu()}>Купи</Button>
                 </Card.Body>
             </Card>
         );
@@ -58,7 +58,7 @@ const ArtikliSvi=(props)=>{
 
     return(
         <Container  className={"kontejner"}>
-            <h1>Artikli prodavca</h1>
+            <h1>Артикли продавца</h1>
             <hr/>
         <div>
     <div className="grid">{artikli.map(renderCard)}</div>

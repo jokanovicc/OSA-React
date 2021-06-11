@@ -21,7 +21,7 @@ public class PorudzbinaDTO implements Serializable {
     @NotEmpty
     private Integer id;
     @NotNull
-    private KupacDTO kupac;
+    private String kupac;
 
     @NotNull
     private Date satnica;
@@ -44,7 +44,12 @@ public class PorudzbinaDTO implements Serializable {
     
     
     public PorudzbinaDTO(Porudzbina porudzbina){
-        this(porudzbina.getId(), new KupacDTO(porudzbina.getKupac()), porudzbina.getSatnica(), porudzbina.isDostavljeno(), porudzbina.getOcena(), porudzbina.getKomentar(), porudzbina.isAnonimanKomentar(), porudzbina.isArhiviranKomentar());
+        this.kupac = porudzbina.getKupac().getKorisnik().getUsername();
+        this.satnica = porudzbina.getSatnica();
+        this.dostavljeno = porudzbina.isDostavljeno();
+        this.ocena = porudzbina.getOcena();
+        this.anonimanKomentar = porudzbina.isAnonimanKomentar();
+        this.anonimanKomentar = porudzbina.isAnonimanKomentar();
     }
 
 

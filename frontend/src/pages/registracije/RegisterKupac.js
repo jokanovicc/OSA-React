@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {Button, Col, Container, Form, Row} from "react-bootstrap";
 import {RegistracijaService} from "../../services/RegistracijaService";
+import Swal from "sweetalert2";
 
 
 const RegisterKupac = ()=>{
@@ -24,7 +25,16 @@ const RegisterKupac = ()=>{
     }
 
     const register = async () => {
-        await RegistracijaService.RegistracijaKupac(kupac);
+
+        if(kupac.ime !=='' && kupac.password !== '' && kupac.prezime !== '' && kupac.adresa !=='' && kupac.username!=='') {
+            await RegistracijaService.RegistracijaKupac(kupac);
+        }else{
+            await Swal.fire({
+                icon: 'error',
+                title: 'Уппсс...',
+                text: 'Не можете послати празно поље!',
+            })
+        }
 
     }
 
@@ -35,11 +45,11 @@ const RegisterKupac = ()=>{
         <Container className={"kontejner"}>
             <Row>
                 <Col md={{ span: 6, offset: 3 }} style={{ textAlign: "center" }}>
-                    <h1>Registracija kupca</h1>
+                    <h1>Регистрација Купца</h1>
                     <hr/>
                     <Form>
                         <Form.Group>
-                            <Form.Label>Ime</Form.Label>
+                            <Form.Label>Име</Form.Label>
                             <Form.Control
                                 type="text"
                                 name="ime"
@@ -48,7 +58,7 @@ const RegisterKupac = ()=>{
                             />
                         </Form.Group>
                         <Form.Group>
-                            <Form.Label>Prezime</Form.Label>
+                            <Form.Label>Презиме</Form.Label>
                             <Form.Control
                                 type="text"
                                 name="prezime"
@@ -57,7 +67,7 @@ const RegisterKupac = ()=>{
                             />
                         </Form.Group>
                         <Form.Group>
-                            <Form.Label>Adresa</Form.Label>
+                            <Form.Label>Адреса</Form.Label>
                             <Form.Control
                                 required
                                 type="text"
@@ -67,7 +77,7 @@ const RegisterKupac = ()=>{
                             />
                         </Form.Group>
                         <Form.Group>
-                            <Form.Label>Username</Form.Label>
+                            <Form.Label>Корисничко име</Form.Label>
                             <Form.Control
                                 type="text"
                                 name="username"
@@ -76,7 +86,7 @@ const RegisterKupac = ()=>{
                             />
                         </Form.Group>
                         <Form.Group>
-                            <Form.Label>Password</Form.Label>
+                            <Form.Label>Лозинка</Form.Label>
                             <Form.Control
                                 type="password"
                                 name="password"
@@ -85,7 +95,7 @@ const RegisterKupac = ()=>{
                             />
                         </Form.Group>
                         <Button variant="success" onClick={register}>
-                            Log in
+                            Региструј се
                         </Button>
                     </Form>
                 </Col>

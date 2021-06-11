@@ -11,7 +11,6 @@ import com.ftn.Taverna.servisi.AkcijaServis;
 import com.ftn.Taverna.servisi.ArtikliServis;
 import com.ftn.Taverna.servisi.ProdavacServis;
 import com.ftn.Taverna.web.kontroleri.DTO.post.ArtikalEditDTO;
-import com.ftn.Taverna.web.kontroleri.DTO.post.v2.ArtikliPostmanPost;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -75,6 +74,7 @@ public class ArtikliKontroler {
     }
 
 
+    @PreAuthorize("hasAnyRole('ADMIN','PRODAVAC','KUPAC')")
     @GetMapping(value = "/{id}")
     public ResponseEntity<ArtikalDTO> getArtikalById(@PathVariable("id") Integer id){
         Artikal artikal = artikliServis.findOne(id);
@@ -82,6 +82,7 @@ public class ArtikliKontroler {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         }
+
         return new ResponseEntity<>(new ArtikalDTO(artikal), HttpStatus.OK);
     }
 
@@ -94,7 +95,6 @@ public class ArtikliKontroler {
         String username = userPrincipal.getUsername();
         System.out.println("Ovo jeee" + username);
         Prodavac prodavac = prodavacServis.getProdavacByUsername(username);
-
         Artikal artikal = new Artikal();
         artikal.setNaziv(artikalDTO.getNaziv());
         artikal.setCena(artikalDTO.getCena());
@@ -109,41 +109,23 @@ public class ArtikliKontroler {
 
     }
 
-
-    @PreAuthorize("hasAnyRole('ADMIN','PRODAVAC')")
-    @PostMapping("dodavanje-artikla")
-        public ResponseEntity<ArtikalDTO> snimiArtikal2(@RequestBody ArtikliPostmanPost artikalDTO){
-
-
-        Prodavac prodavac = prodavacServis.findOne(artikalDTO.getProdavac());
-        if(prodavac == null){
-            return new ResponseEntity<ArtikalDTO>(HttpStatus.BAD_REQUEST);
-        }
-
-
-        Artikal artikal = new Artikal();
-        artikal.setProdavac(prodavac);
-        artikal.setNaziv(artikalDTO.getNaziv());
-        artikal.setCena(artikalDTO.getCena());
-        artikal.setOpis(artikalDTO.getOpis());
-        artikal.setPutanjaDoSlike(artikalDTO.getPutanjaDoSlike());
-        artikal.setProdavac(prodavac);
-
-
-        artikal = artikliServis.saveArtikal(artikal);
-        return new ResponseEntity<ArtikalDTO>(new ArtikalDTO(artikal), HttpStatus.CREATED);
-
-
-    }
 
 
     @PreAuthorize("hasAnyRole('ADMIN','PRODAVAC')")
     @PutMapping("/{id}")
-    public ResponseEntity<ArtikalDTO> izmeniArtikal(@PathVariable("id") Integer id,@RequestBody ArtikalEditDTO artikalDTO){
+    public ResponseEntity<ArtikalDTO> izmeniArtikal(@PathVariable("id") Integer id,@RequestBody ArtikalEditDTO artikalDTO,Authentication authentication){
         Artikal artikal = artikliServis.findOne(id);
         if(artikal == null){
             return new ResponseEntity<ArtikalDTO>(HttpStatus.BAD_REQUEST);
         }
+
+        UserDetails userPrincipal = (UserDetails) authentication.getPrincipal();
+        String username = userPrincipal.getUsername();
+        Prodavac prodavac = prodavacServis.getProdavacByUsername(username);
+        if(!prodavac.getKorisnik().getId().equals(artikal.getProdavac().getKorisnik().getId())){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
         artikal.setNaziv(artikalDTO.getNaziv());
         artikal.setCena(artikalDTO.getCena());
         artikal.setOpis(artikalDTO.getOpis());

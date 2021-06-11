@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import {Alert, Button, Container, Form} from "react-bootstrap";
 import { useParams } from "react-router";
 import {ArtikliService} from "../../services/ArtikliService";
+import Swal from "sweetalert2";
 const EditArtikal = () => {
     const [artikal, setArtikal] = useState({
         naziv: "",
@@ -30,8 +31,18 @@ const EditArtikal = () => {
 
     async function editArtikal() {
         try {
-            await ArtikliService.editArtikal(id, artikal);
-            setShowSuccessAlert(true);
+            if(artikal.naziv !== '' && artikal.cena !== ''&& artikal.opis!==''&& artikal.putanjaDoSlike!==''){
+                await ArtikliService.editArtikal(id, artikal);
+                setShowSuccessAlert(true);
+            }else{
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Уппсс...',
+                    text: 'Не можете послати празно поље!',
+                })
+            }
+
+
         } catch (error) {
             console.error(`Greška prilikom аžuriranja stanja artikla: ${error}`);
         }
@@ -50,15 +61,15 @@ const EditArtikal = () => {
                     onClose={() => setShowSuccessAlert(false)}
                     dismissible
                 >
-                    Artikal uspešno ažuriran!
+                    Артикал успешно ажуриран!
                 </Alert>
             )}
             <Container className={"kontejner"}>
-                <h1>Izmena artikla</h1>
+                <h1>Измена артикла</h1>
                 <hr/>
                 <Form>
                 <Form.Group>
-                    <Form.Label>Naziv</Form.Label>
+                    <Form.Label>Назив</Form.Label>
                     <Form.Control
                         onChange={handleFormInputChange("naziv")}
                         name="naziv"
@@ -67,7 +78,7 @@ const EditArtikal = () => {
                     />
                 </Form.Group>
                 <Form.Group>
-                    <Form.Label>Opis</Form.Label>
+                    <Form.Label>Опис</Form.Label>
                     <Form.Control
                         onChange={handleFormInputChange("opis")}
                         name="opis"
@@ -76,7 +87,7 @@ const EditArtikal = () => {
                     />
                 </Form.Group>
                 <Form.Group>
-                    <Form.Label>Cena</Form.Label>
+                    <Form.Label>Цена</Form.Label>
                     <Form.Control
                         onChange={handleFormInputChange("cena")}
                         name="cena"
@@ -85,7 +96,7 @@ const EditArtikal = () => {
                     />
                 </Form.Group>
                 <Button variant="primary" onClick={() => editArtikal()}>
-                    Edit
+                    Измени
                 </Button>
             </Form>
             </Container>

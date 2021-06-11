@@ -2,14 +2,17 @@ import {useEffect, useState} from "react";
 import {ArtikliService} from "../../services/ArtikliService";
 import {Container,Card,Button,Table,Row, Col} from "react-bootstrap";
 import {Link} from "react-router-dom";
+import {useParams} from "react-router";
 
 const SviProdavci=()=>{
     const[prodavci,setProdavci] = useState([]);
 
 
+    const {id} = useParams();
+
     useEffect(()=>{
         fetchProdavci();
-    })
+    },[id])
 
 
     async function fetchProdavci(){
@@ -28,16 +31,16 @@ const SviProdavci=()=>{
         <Container className={"kontejner"}>
             <Row>
                 <Col md={{ span: 8, offset: 2 }} style={{ textAlign: "center" }}>
-                    <h1>Prodavci</h1>
+                    <h1>Продавци</h1>
 
                     <Table bordered striped style={{ marginTop: 5 }}>
                         <thead className="thead-dark">
                         <tr>
-                            <th>Ime</th>
-                            <th>Prezime</th>
-                            <th>Naziv</th>
-                            <th>Posluje od</th>
-                            <th colSpan={2}>Akcije</th>
+                            <th>Име</th>
+                            <th>Презиме</th>
+                            <th>Назив</th>
+                            <th>Послује од</th>
+                            <th colSpan={2}>Акције</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -53,7 +56,7 @@ const SviProdavci=()=>{
                                             variant="info"
                                             as={Link} to={"/artikli/"+prodavac.id}
                                         >
-                                            Poseti
+                                            ПОСЕТИ
                                         </Button>
                                     </td>
                                 </tr>

@@ -76,6 +76,14 @@ public class LoginKontroler {
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody KorisnikDTO userDto) {
+
+        Korisnik korisnik = korisnikServis.findByUsername(userDto.getUsername());
+        if (korisnik!=null && korisnik.isBlokiran()) {
+            return ResponseEntity.notFound().build();
+        }
+
+
+
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(userDto.getUsername(), userDto.getPassword());
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
